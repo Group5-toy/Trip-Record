@@ -1,0 +1,9 @@
+package toy.five.triprecord.domain.jouney.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+public class JourneyController {
+}
