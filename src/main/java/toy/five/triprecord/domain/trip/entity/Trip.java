@@ -42,6 +42,4 @@ public class Trip extends BaseTimeEntity {
 
     private Boolean isDomestic;
 
-
-
 }
