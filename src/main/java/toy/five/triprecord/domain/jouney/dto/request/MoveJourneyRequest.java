@@ -20,19 +20,5 @@ public class MoveJourneyRequest {
     private String endPoint;
     private JourneyType type;
 
-    //toEntity : TripCreateDto -> Trip
-    //toEntity : MoverJourneyCreateDto -> MoveJourney
-    //toEntity : Trip? -> MoveJourney
-    public MoveJourney toEntity(Trip trip) {
-        return MoveJourney.builder()
-                .trip(trip)
-                .name(this.name)
-                .vehicle(this.vehicle)
-                .startPoint(this.startPoint)
-                .endPoint(this.endPoint)
-                .type(this.type)
-                .build();
-    }
-
 
 }
