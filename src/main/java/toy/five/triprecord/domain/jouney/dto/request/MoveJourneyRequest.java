@@ -14,13 +14,15 @@ import toy.five.triprecord.domain.trip.entity.Trip;
 @Builder
 public class MoveJourneyRequest {
 
-    private Trip trip;
     private String name;
     private String vehicle;
     private String startPoint;
     private String endPoint;
     private JourneyType type;
 
+    //toEntity : TripCreateDto -> Trip
+    //toEntity : MoverJourneyCreateDto -> MoveJourney
+    //toEntity : Trip? -> MoveJourney
     public MoveJourney toEntity(Trip trip) {
         return MoveJourney.builder()
                 .trip(trip)
@@ -31,7 +33,6 @@ public class MoveJourneyRequest {
                 .type(this.type)
                 .build();
     }
-
 
 
 }

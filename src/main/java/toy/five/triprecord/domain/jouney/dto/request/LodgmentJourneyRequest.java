@@ -15,7 +15,6 @@ import toy.five.triprecord.domain.trip.entity.Trip;
 @Builder
 public class LodgmentJourneyRequest {
 
-    private Trip trip;
     private String name;
     private String dormitoryName;
     private JourneyType type;

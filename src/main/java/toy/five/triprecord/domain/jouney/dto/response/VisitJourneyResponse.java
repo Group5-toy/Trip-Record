@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 public class VisitJourneyResponse {
 
-    private Trip trip;
+    private Long tripId;
     private String name;
     private String location;
     private JourneyType type;
@@ -24,7 +24,7 @@ public class VisitJourneyResponse {
 
     public static VisitJourneyResponse fromEntity(VisitJourney entity) {
         return VisitJourneyResponse.builder()
-                .trip(entity.getTrip())
+                .tripId(entity.getTrip().getId())
                 .name(entity.getName())
                 .location(entity.getLocation())
                 .type(entity.getType())

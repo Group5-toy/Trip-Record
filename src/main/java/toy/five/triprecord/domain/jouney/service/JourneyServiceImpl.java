@@ -14,6 +14,8 @@ import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyResponse;
 import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyResponse;
 import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyResponse;
 import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
+import toy.five.triprecord.domain.jouney.entity.MoveJourney;
+import toy.five.triprecord.domain.jouney.entity.VisitJourney;
 import toy.five.triprecord.domain.jouney.repository.LodgmentJourneyRepository;
 import toy.five.triprecord.domain.jouney.repository.MoveJourneyRepository;
 import toy.five.triprecord.domain.jouney.repository.VisitJourneyRepository;
@@ -65,28 +67,90 @@ public class JourneyServiceImpl implements JourneyService{
         return new ArrayList<>();
     }
 
+    private Trip findTripById(Long tripId) {
+        return tripRepository.findById(tripId)
+                .orElseThrow(RuntimeException::new);
+    }
 
+
+    
     @Override
     @Transactional
     public JourneyResponse saveJourneys(Long tripId, JourneyRequest request) {
 
-        Trip trip = tripRepository.getReferenceById(tripId);
+        
+        Trip trip = findTripById(tripId);
 
-        List<MoveJourneyResponse> moveJourneyResponses = saveJourneyList(
-                trip,
-                request.getMoves(),
-                (Trip t, MoveJourneyRequest r) -> r.toEntity(t),
-                MoveJourneyResponse::fromEntity, moveJourneyRepository);
+        List<MoveJourneyRequest> moveJourneyDtos = request.getMoves();//이동
+        List<LodgmentJourneyRequest> lodgmentJourneyDtos = request.getLodgments();//숙박
+        List<VisitJourneyRequest> visitJourneyDtos = request.getVisits();//체류
 
+        List<MoveJourney> moveJourneys =
+                moveJourneyDtos.stream().map(journeyRequest ->
+                                MoveJourney.builder()
+                                    .trip(findTripById(tripId))
+                                    .name(journeyRequest.getName())
+                                    .vehicle(journeyRequest.getVehicle())
+                                    .startPoint(journeyRequest.getStartPoint())
+                                    .endPoint(journeyRequest.getEndPoint())
+                                    .type(journeyRequest.getType())
+                                    .build()
+                        ).toList();
 
+        List<LodgmentJourney> lodgmentJourneys =
+                lodgmentJourneyDtos.stream().map(journeyRequest ->
+                        LodgmentJourney.builder()
+                                .trip(findTripById(tripId))
+                                .name(journeyRequest.getName())
+                                .dormitoryName(journeyRequest.getDormitoryName())
+                                .type(journeyRequest.getType())
+                                .build()
+                        ).toList();
 
+        List<VisitJourney> visitJourneys =
+                visitJourneyDtos.stream().map(journeyRequest ->
+                        VisitJourney.builder()
+                                .trip(findTripById(tripId))
+                                .name(journeyRequest.getName())
+                                .location(journeyRequest.getLocation())
+                                .type(journeyRequest.getType())
+                                .build()
+                        ).toList();
 
+        List<MoveJourney> savedMoveJourneys =
+                moveJourneyRepository.saveAll(moveJourneys);
+        List<LodgmentJourney> savedLodgmentJourneys =
+                lodgmentJourneyRepository.saveAll(lodgmentJourneys);
+        List<VisitJourney> savedVisitJourneys =
+                visitJourneyRepository.saveAll(visitJourneys);
 
-        List<VisitJourneyResponse> visitJourneyResponses = saveJourneyList(trip, request.getVisits(), (Trip t, VisitJourneyRequest r) -> r.toEntity(t), VisitJourneyResponse::fromEntity, visitJourneyRepository);
-        List<LodgmentJourneyResponse> lodgmentJourneyResponses = saveJourneyList(trip, request.getLodgments(), (Trip t, LodgmentJourneyRequest r) -> r.toEntity(t), LodgmentJourneyResponse::fromEntity, lodgmentJourneyRepository);
+        List<MoveJourneyResponse> moveJourneyResponses =
+                savedMoveJourneys.stream().map(MoveJourneyResponse::fromEntity).toList();
+        List<LodgmentJourneyResponse> lodgmentJourneyResponses =
+                savedLodgmentJourneys.stream().map(LodgmentJourneyResponse::fromEntity).toList();
+        List<VisitJourneyResponse> visitJourneyResponses =
+                savedVisitJourneys.stream().map(VisitJourneyResponse::fromEntity).toList();
+
 
         return JourneyResponse.of(moveJourneyResponses, visitJourneyResponses, lodgmentJourneyResponses);
+
+//        Trip trip = tripRepository.getReferenceById(tripId);
+//
+//        List<MoveJourneyResponse> moveJourneyResponses = saveJourneyList(
+//                trip,
+//                request.getMoves(),
+//                (Trip t, MoveJourneyRequest r) -> r.toEntity(t),
+//                MoveJourneyResponse::fromEntity, moveJourneyRepository
+//        );
+//
+//        List<VisitJourneyResponse> visitJourneyResponses = saveJourneyList(
+//                trip,
+//                request.getVisits(),
+//                (Trip t, VisitJourneyRequest r) -> r.toEntity(t),
+//                VisitJourneyResponse::fromEntity, visitJourneyRepository
+//        );
+//        List<LodgmentJourneyResponse> lodgmentJourneyResponses = saveJourneyList(trip, request.getLodgments(), (Trip t, LodgmentJourneyRequest r) -> r.toEntity(t), LodgmentJourneyResponse::fromEntity, lodgmentJourneyRepository);
+//
+//        return JourneyResponse.of(moveJourneyResponses, visitJourneyResponses, lodgmentJourneyResponses);
     }
-
-
 }

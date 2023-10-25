@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import toy.five.triprecord.domain.jouney.entity.JourneyType;
 import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
+import toy.five.triprecord.domain.jouney.entity.MoveJourney;
 import toy.five.triprecord.domain.jouney.entity.VisitJourney;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
@@ -28,6 +29,5 @@ public class VisitJourneyRequest {
                 .type(this.type)
                 .build();
     }
-
 
 }
