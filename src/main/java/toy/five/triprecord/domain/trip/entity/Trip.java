@@ -1,13 +1,13 @@
 package toy.five.triprecord.domain.trip.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
 import toy.five.triprecord.domain.jouney.entity.MoveJourney;
 import toy.five.triprecord.domain.jouney.entity.VisitJourney;
+import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
+import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
+import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 import toy.five.triprecord.global.common.BaseTimeEntity;
 
 import java.time.LocalDateTime;
@@ -41,6 +41,37 @@ public class Trip extends BaseTimeEntity {
     private LocalDateTime endTime;
 
     private Boolean isDomestic;
+
+    private void updateName(String name) {
+        this.name = name;
+    }
+
+    private void updateStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    private void updateEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    private void updateIsDomestic(Boolean isDomestic) {
+        this.isDomestic = isDomestic;
+    }
+
+
+    public void updateColumns(TripUpdateRequest tripUpdateRequest) {
+        updateName(tripUpdateRequest.getName());
+        updateStartTime(tripUpdateRequest.getStartTime());
+        updateEndTime(tripUpdateRequest.getEndTime());
+        updateIsDomestic(tripUpdateRequest.getIsDomestic());
+    }
+
+
+
+
+
+
+
 
 
 
