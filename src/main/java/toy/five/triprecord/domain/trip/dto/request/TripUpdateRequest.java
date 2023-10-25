@@ -20,23 +20,5 @@ public class TripUpdateRequest {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Boolean isDomestic;
-
-    public void updateFromTripCreateRequest(TripUpdateRequest tripUpdateRequest) {
-        if (!tripUpdateRequest.getName().isEmpty()) {
-            this.name = tripUpdateRequest.getName();
-        }
-        if (tripUpdateRequest.getStartTime() != null) {
-            this.startTime = tripUpdateRequest.getStartTime();
-        }
-        if (tripUpdateRequest.getEndTime() != null) {
-            this.endTime = tripUpdateRequest.getEndTime();
-        }
-        if (tripUpdateRequest.getIsDomestic() != null) {
-            this.isDomestic = tripUpdateRequest.getIsDomestic();
-        }
-    }
-
-
-
-
+    
 }
