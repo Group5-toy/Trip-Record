@@ -1,5 +1,7 @@
 package toy.five.triprecord.domain.trip.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
@@ -36,10 +38,13 @@ public class Trip extends BaseTimeEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "trip", cascade = CascadeType.ALL)
     private List<LodgmentJourney> lodgmentJourneys;
 
+    @Column
     private LocalDateTime startTime;
 
+    @Column
     private LocalDateTime endTime;
 
+    @Column
     private Boolean isDomestic;
 
     private void updateName(String name) {
