@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ErrorCode {
 
     //Trip
-    BAD_REQUEST("잘못된 요청")
+    TRIP_NO_EXIST("해당 ID의 여행 정보가 없습니다."),
     ;
 
     //J
