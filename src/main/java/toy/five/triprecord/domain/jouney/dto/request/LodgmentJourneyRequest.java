@@ -20,13 +20,4 @@ public class LodgmentJourneyRequest {
     private JourneyType type;
 
 
-    public LodgmentJourney toEntity(Trip trip) {
-        return LodgmentJourney.builder()
-                .trip(trip)
-                .name(this.name)
-                .dormitoryName(this.dormitoryName)
-                .type(this.type)
-                .build();
-    }
-
 }

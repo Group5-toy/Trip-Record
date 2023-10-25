@@ -18,7 +18,7 @@ import java.util.Locale;
 @Builder
 public class MoveJourneyResponse {
 
-    private Trip trip;
+    private Long tripId;
     private String name;
     private String vehicle;
     private String startPoint;
@@ -30,7 +30,7 @@ public class MoveJourneyResponse {
 
     public static MoveJourneyResponse fromEntity(MoveJourney entity) {
         return MoveJourneyResponse.builder()
-                .trip(entity.getTrip())
+                .tripId(entity.getTrip().getId())
                 .name(entity.getName())
                 .vehicle(entity.getVehicle())
                 .startPoint(entity.getStartPoint())

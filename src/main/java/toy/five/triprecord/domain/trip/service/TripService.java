@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyResponse;
+import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyResponse;
+import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyResponse;
 import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
 import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
@@ -33,6 +36,7 @@ public class TripService {
 
     @Transactional(readOnly = true)
     public TripEntryResponse getTripById(Long tripId) {
+
         return TripEntryResponse.fromEntity(findTripById(tripId));
     }
 
@@ -58,8 +62,6 @@ public class TripService {
                 .build();
 
         return TripCreateResponse.fromEntity(tripRepository.save(newTrip));
-
-
     }
 
     @Transactional

@@ -20,5 +20,5 @@ public class TripUpdateRequest {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Boolean isDomestic;
-    
+
 }

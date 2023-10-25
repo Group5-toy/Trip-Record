@@ -2,21 +2,17 @@ package toy.five.triprecord.domain.trip.controller;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
 import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
 import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
 import toy.five.triprecord.domain.trip.dto.response.TripCreateResponse;
 import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 import toy.five.triprecord.domain.trip.service.TripService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
-import toy.five.triprecord.domain.trip.service.TripService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -69,5 +65,26 @@ public class TripController {
         TripUpdateResponse savedTrip = tripService.updateTrip(tripId,tripCreateRequest);
         return ResponseEntity.ok(savedTrip);
         //exceptionHandler로 처리 예정
+    }
+
+    @PostConstruct
+    public void init() {
+        tripService.createTrip(
+                TripCreateRequest.builder()
+                        .name("여행1")
+                        .startTime(LocalDateTime.now())
+                        .endTime(LocalDateTime.now())
+                        .isDomestic(true)
+                        .build()
+        );
+
+        tripService.createTrip(
+                TripCreateRequest.builder()
+                        .name("여행2")
+                        .startTime(LocalDateTime.now())
+                        .endTime(LocalDateTime.now())
+                        .isDomestic(false)
+                        .build()
+        );
     }
 }

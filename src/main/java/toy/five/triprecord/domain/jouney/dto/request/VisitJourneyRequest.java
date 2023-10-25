@@ -16,18 +16,8 @@ import toy.five.triprecord.domain.trip.entity.Trip;
 @Builder
 public class VisitJourneyRequest {
 
-    private Trip trip;
     private String name;
     private String location;
     private JourneyType type;
-
-    public VisitJourney toEntity(Trip trip) {
-        return VisitJourney.builder()
-                .trip(trip)
-                .name(this.name)
-                .location(this.location)
-                .type(this.type)
-                .build();
-    }
 
 }

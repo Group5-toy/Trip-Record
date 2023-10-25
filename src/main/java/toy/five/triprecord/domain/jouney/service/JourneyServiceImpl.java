@@ -48,32 +48,11 @@ public class JourneyServiceImpl implements JourneyService{
         this.lodgmentJourneyRepository = lodgmentJourneyRepository;
     }
 
-
-    private <Req, E, Res> List<Res> saveJourneyList(Trip trip,
-                                                    List<Req> requests,
-                                                    BiFunction<Trip, Req, E> toEntity,
-                                                    Function<E, Res> fromEntity,
-                                                    JpaRepository<E, ?> repository) {
-        if (requests != null) {
-            List<E> entities = requests.stream()
-                    .map(request -> toEntity.apply(trip, request))
-                    .toList();
-            List<E> savedEntities = repository.saveAll(entities);
-
-            return savedEntities.stream()
-                    .map(fromEntity)
-                    .toList();
-        }
-        return new ArrayList<>();
-    }
-
     private Trip findTripById(Long tripId) {
         return tripRepository.findById(tripId)
                 .orElseThrow(RuntimeException::new);
     }
 
-
-    
     @Override
     @Transactional
     public JourneyResponse saveJourneys(Long tripId, JourneyRequest request) {
@@ -134,23 +113,5 @@ public class JourneyServiceImpl implements JourneyService{
 
         return JourneyResponse.of(moveJourneyResponses, visitJourneyResponses, lodgmentJourneyResponses);
 
-//        Trip trip = tripRepository.getReferenceById(tripId);
-//
-//        List<MoveJourneyResponse> moveJourneyResponses = saveJourneyList(
-//                trip,
-//                request.getMoves(),
-//                (Trip t, MoveJourneyRequest r) -> r.toEntity(t),
-//                MoveJourneyResponse::fromEntity, moveJourneyRepository
-//        );
-//
-//        List<VisitJourneyResponse> visitJourneyResponses = saveJourneyList(
-//                trip,
-//                request.getVisits(),
-//                (Trip t, VisitJourneyRequest r) -> r.toEntity(t),
-//                VisitJourneyResponse::fromEntity, visitJourneyRepository
-//        );
-//        List<LodgmentJourneyResponse> lodgmentJourneyResponses = saveJourneyList(trip, request.getLodgments(), (Trip t, LodgmentJourneyRequest r) -> r.toEntity(t), LodgmentJourneyResponse::fromEntity, lodgmentJourneyRepository);
-//
-//        return JourneyResponse.of(moveJourneyResponses, visitJourneyResponses, lodgmentJourneyResponses);
     }
 }
