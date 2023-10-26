@@ -1,21 +1,25 @@
 package toy.five.triprecord.domain.trip.controller;
 
-import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
 import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
+import toy.five.triprecord.domain.trip.dto.request.TripPatchRequest;
 import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
 import toy.five.triprecord.domain.trip.dto.response.TripCreateResponse;
+import toy.five.triprecord.domain.trip.dto.response.TripPatchResponse;
 import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 import toy.five.triprecord.domain.trip.service.TripService;
-import toy.five.triprecord.domain.trip.validation.TripValidation;
 import toy.five.triprecord.global.exception.ApiResponse;
+import toy.five.triprecord.global.exception.BaseException;
+import toy.five.triprecord.global.exception.ErrorCode;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -25,7 +29,6 @@ import java.util.List;
 public class TripController {
 
     private final TripService tripService;
-    private final TripValidation tripValidation;
 
     @GetMapping("/{tripId}")
     public TripEntryResponse getTrip(@PathVariable final Long tripId) {
@@ -37,7 +40,6 @@ public class TripController {
     @GetMapping("/all")
     public List<TripEntryResponse> getAllTrips() {
         log.info("GET /trips/all HTTP/1.1");
-
         return tripService.getAllTrips();
     }
 
@@ -47,16 +49,10 @@ public class TripController {
      * @param tripCreateRequest {@link TripCreateRequest} 여행 등록 요청 파라미터
      * @return {@link ResponseEntity}
      **/
-
     @PostMapping
-    public ResponseEntity<ApiResponse> createTrip(@RequestBody TripCreateRequest tripCreateRequest) {
-        tripValidation.validatePostNameDomesticTrip(tripCreateRequest);
-        tripValidation.validateTimeTrip(tripCreateRequest);
-
+    public ResponseEntity<ApiResponse> createTrip(@Valid @RequestBody TripCreateRequest tripCreateRequest) {
         TripCreateResponse savedTrip = tripService.createTrip(tripCreateRequest);
-
         return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(savedTrip).build());
-
     }
 
     /**
@@ -66,19 +62,22 @@ public class TripController {
      * @param tripUpdateRequest {@link TripCreateRequest} 여행 수정 내용 요청 파라미터
      * @return {@link ResponseEntity}
      **/
-
-
     @PutMapping("/{tripId}")
-    public ResponseEntity<ApiResponse> updateTrip(@PathVariable Long tripId, @RequestBody TripUpdateRequest tripUpdateRequest) {
-        tripValidation.validatePutAllTrip(tripUpdateRequest);
-        tripValidation.validateTimeTrip(tripUpdateRequest);
-
+    public ResponseEntity<ApiResponse> updateTrip(@NotNull @PathVariable Long tripId, @Valid @RequestBody TripUpdateRequest tripUpdateRequest) {
         TripUpdateResponse savedTrip = tripService.updateTrip(tripId,tripUpdateRequest);
-
         return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(savedTrip).build());
 
     }
 
+    @PatchMapping("/{tripId}")
+    public ResponseEntity<ApiResponse> PatchTrip(@NotNull @PathVariable Long tripId, @Valid @RequestBody TripPatchRequest tripPatchRequest) {
+        TripPatchResponse savedTrip = tripService.patchTrip(tripId,tripPatchRequest);
+        return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(savedTrip).build());
+    }
+
+
+
+/**
     @PostConstruct
     public void init() {
         tripService.createTrip(
@@ -99,4 +98,5 @@ public class TripController {
                         .build()
         );
     }
+    **/
 }
