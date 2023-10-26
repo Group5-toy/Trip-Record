@@ -3,6 +3,9 @@ package toy.five.triprecord.domain.trip.controller;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
@@ -31,10 +34,14 @@ public class TripController {
     }
 
     @GetMapping("/all")
-    public List<TripEntryResponse> getAllTrips() {
-        log.info("GET /trips/all HTTP/1.1");
+    public List<TripEntryResponse> getAllTrips(
+            @PageableDefault(size=5, sort = "id", direction = Sort.Direction.ASC)
+            Pageable pageable
+    ) {
+        log.info("GET /trips/allPaging HTTP/1.1");
 
-        return tripService.getAllTrips();
+
+        return tripService.getAllTrips(pageable);
     }
 
     /**

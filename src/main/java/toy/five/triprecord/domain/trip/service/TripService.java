@@ -2,30 +2,22 @@ package toy.five.triprecord.domain.trip.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyResponse;
-import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyResponse;
-import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyResponse;
 import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
 import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
 import toy.five.triprecord.global.exception.BaseException;
-import toy.five.triprecord.global.exception.ErrorCode;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static toy.five.triprecord.global.exception.ErrorCode.TRIP_NO_EXIST;
-import org.springframework.transaction.annotation.Transactional;
+
 import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
 import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
 import toy.five.triprecord.domain.trip.dto.response.TripCreateResponse;
 import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
-import toy.five.triprecord.domain.trip.entity.Trip;
-import toy.five.triprecord.domain.trip.repository.TripRepository;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,9 +33,9 @@ public class TripService {
     }
 
     @Transactional(readOnly = true)
-    public List<TripEntryResponse> getAllTrips() {
-        return tripRepository.findAll().stream()    //Nullable 발생 시 처리 예정
-                .map(TripEntryResponse::fromEntity).toList();   //pageable 고려 논의 필요.
+    public List<TripEntryResponse> getAllTrips(Pageable pageable) {
+        return tripRepository.findAll(pageable)    //Nullable 발생 시 처리 예정
+                .map(TripEntryResponse::fromEntity).getContent();
     }
 
     private Trip findTripById(Long id) {
