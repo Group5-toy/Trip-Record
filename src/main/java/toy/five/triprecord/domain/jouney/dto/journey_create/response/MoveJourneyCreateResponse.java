@@ -21,8 +21,8 @@ public class MoveJourneyCreateResponse {
     private String startPoint;
     private String endPoint;
     private JourneyType type;
-    private LocalDateTime createdTime;
-    private LocalDateTime modifiedTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
 
     public static MoveJourneyCreateResponse fromEntity(MoveJourney entity) {
@@ -33,8 +33,8 @@ public class MoveJourneyCreateResponse {
                 .startPoint(entity.getStartPoint())
                 .endPoint(entity.getEndPoint())
                 .type(entity.getType())
-                .createdTime(entity.getCreatedTime())
-                .modifiedTime(entity.getModifiedTime())
+                .startTime(entity.getStartTime())
+                .endTime(entity.getEndTime())
                 .build();
     }
 }

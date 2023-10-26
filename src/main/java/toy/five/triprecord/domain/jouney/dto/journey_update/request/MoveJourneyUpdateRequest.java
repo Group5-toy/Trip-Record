@@ -8,6 +8,8 @@ import toy.five.triprecord.domain.jouney.entity.JourneyType;
 import toy.five.triprecord.domain.jouney.entity.MoveJourney;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,20 +20,21 @@ public class MoveJourneyUpdateRequest {
     private String vehicle;
     private String startPoint;
     private String endPoint;
-    private JourneyType type;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
-    public void updateCheck(MoveJourneyUpdateRequest request) {
-        if(request.getName() != null) {
-            this.name = request.getName();
-        }
-        if(request.getName() != null) {
-            this.vehicle = request.getVehicle();
-        }
-        if(request.getName() != null) {
-            this.startPoint = request.getStartPoint();
-        }
-        if(request.getName() != null) {
-            this.endPoint = request.getEndPoint();
-        }
-    }
+//    public void updateCheck(MoveJourneyUpdateRequest request) {
+//        if(request.getName() != null) {
+//            this.name = request.getName();
+//        }
+//        if(request.getName() != null) {
+//            this.vehicle = request.getVehicle();
+//        }
+//        if(request.getName() != null) {
+//            this.startPoint = request.getStartPoint();
+//        }
+//        if(request.getName() != null) {
+//            this.endPoint = request.getEndPoint();
+//        }
+//    }
 }

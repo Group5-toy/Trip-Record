@@ -8,15 +8,18 @@ import toy.five.triprecord.domain.jouney.entity.JourneyType;
 import toy.five.triprecord.domain.jouney.entity.VisitJourney;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class VisitJourneyUpdateRequest {
 
-    private Trip trip;
     private String name;
     private String location;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private JourneyType type;
 
     public void updateCheck(VisitJourneyUpdateRequest request) {

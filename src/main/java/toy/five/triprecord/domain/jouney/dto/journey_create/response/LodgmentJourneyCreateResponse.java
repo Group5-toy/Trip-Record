@@ -18,8 +18,8 @@ public class LodgmentJourneyCreateResponse {
     private String name;
     private String dormitoryName;
     private JourneyType type;
-    private LocalDateTime createdTime;
-    private LocalDateTime modifiedTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public static LodgmentJourneyCreateResponse fromEntity(LodgmentJourney entity) {
         return LodgmentJourneyCreateResponse.builder()
@@ -27,8 +27,8 @@ public class LodgmentJourneyCreateResponse {
                 .name(entity.getName())
                 .dormitoryName(entity.getDormitoryName())
                 .type(entity.getType())
-                .createdTime(entity.getCreatedTime())
-                .modifiedTime(entity.getModifiedTime())
+                .startTime(entity.getStartTime())
+                .endTime(entity.getEndTime())
                 .build();
     }
 

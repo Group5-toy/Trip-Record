@@ -8,6 +8,8 @@ import toy.five.triprecord.domain.jouney.entity.JourneyType;
 import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,25 +18,16 @@ public class LodgmentJourneyUpdateRequest {
 
     private String name;
     private String dormitoryName;
-    private JourneyType type;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
-
-    public LodgmentJourney toEntity(Trip trip) {
-        return LodgmentJourney.builder()
-                .trip(trip)
-                .name(this.name)
-                .dormitoryName(this.dormitoryName)
-                .type(this.type)
-                .build();
-    }
-
-    public void updateCheck(LodgmentJourneyUpdateRequest request) {
-        if(request.getName() != null) {
-            this.name = request.getName();
-        }
-        if(request.getName() != null) {
-            this.dormitoryName = request.getDormitoryName();
-        }
-    }
+//    public void updateCheck(LodgmentJourneyUpdateRequest request) {
+//        if(request.getName() != null) {
+//            this.name = request.getName();
+//        }
+//        if(request.getName() != null) {
+//            this.dormitoryName = request.getDormitoryName();
+//        }
+//    }
 
 }

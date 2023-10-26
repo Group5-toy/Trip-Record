@@ -18,8 +18,8 @@ public class LodgmentJourneyUpdateResponse {
     private String name;
     private String dormitoryName;
     private JourneyType type;
-    private LocalDateTime createdTime;
-    private LocalDateTime modifiedTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public static LodgmentJourneyUpdateResponse fromEntity(LodgmentJourney entity) {
         return LodgmentJourneyUpdateResponse.builder()
@@ -27,8 +27,8 @@ public class LodgmentJourneyUpdateResponse {
                 .name(entity.getName())
                 .dormitoryName(entity.getDormitoryName())
                 .type(entity.getType())
-                .createdTime(entity.getCreatedTime())
-                .modifiedTime(entity.getModifiedTime())
+                .startTime(entity.getStartTime())
+                .endTime(entity.getEndTime())
                 .build();
     }
 

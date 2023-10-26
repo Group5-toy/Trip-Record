@@ -18,8 +18,8 @@ public class VisitJourneyUpdateResponse {
     private String name;
     private String location;
     private JourneyType type;
-    private LocalDateTime createdTime;
-    private LocalDateTime modifiedTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     public static VisitJourneyUpdateResponse fromEntity(VisitJourney entity) {
         return VisitJourneyUpdateResponse.builder()
@@ -27,8 +27,8 @@ public class VisitJourneyUpdateResponse {
                 .name(entity.getName())
                 .location(entity.getLocation())
                 .type(entity.getType())
-                .createdTime(entity.getCreatedTime())
-                .modifiedTime(entity.getModifiedTime())
+                .startTime(entity.getStartTime())
+                .endTime(entity.getEndTime())
                 .build();
     }
 
