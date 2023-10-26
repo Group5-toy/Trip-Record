@@ -32,8 +32,8 @@ public class JourneyController {
     public JourneyResponse createJourney(@PathVariable Long tripId, @RequestBody JourneyRequest request) {
         return journeyService.saveJourneys(tripId, request);
     }
-/**
-    @PostConstruct
+ /**
+    //@PostConstruct
     public void init() {
         MoveJourneyRequest move =
                 MoveJourneyRequest.builder()
@@ -67,5 +67,5 @@ public class JourneyController {
         journeyService.saveJourneys(1L, journeyRequest);
 
     }
-    **/
+**/
 }
