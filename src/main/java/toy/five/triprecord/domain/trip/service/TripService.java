@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
+import toy.five.triprecord.domain.trip.dto.request.TripPatchRequest;
+import toy.five.triprecord.domain.trip.dto.response.TripPatchResponse;
 import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
-import toy.five.triprecord.domain.trip.validation.TripValidation;
+import toy.five.triprecord.domain.trip.validation.patchtime.TripPatchTimeValidatorUtils;
 import toy.five.triprecord.global.exception.BaseException;
 import java.util.List;
 import static toy.five.triprecord.global.exception.ErrorCode.TRIP_NO_EXIST;
@@ -22,6 +24,7 @@ import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 public class TripService {
 
     private final TripRepository tripRepository;
+    private final TripPatchTimeValidatorUtils tripPatchTimeValidatorUtils;
 
 
     @Transactional(readOnly = true)
@@ -54,21 +57,34 @@ public class TripService {
     }
 
     @Transactional
-    public TripUpdateResponse updateTrip(Long tripId, TripUpdateRequest tripUpdateRequest) {
+    public TripUpdateResponse updateTrip(Long tripId,TripUpdateRequest tripUpdateRequest) {
 
         Trip existingTrip = tripRepository.findById(tripId).orElseThrow(RuntimeException::new);
 
-        TripUpdateRequest updateRequest = TripUpdateRequest.builder()
+        existingTrip.updateAllColumns(tripUpdateRequest);
+
+        return TripUpdateResponse.fromEntity(existingTrip);
+
+    }
+
+    @Transactional
+    public TripPatchResponse patchTrip(Long tripId, TripPatchRequest tripPatchRequest) {
+
+        Trip existingTrip = tripRepository.findById(tripId).orElseThrow(RuntimeException::new);
+
+        TripPatchRequest updateRequest = TripPatchRequest.builder()
                 .name(existingTrip.getName())
                 .startTime(existingTrip.getStartTime())
                 .endTime(existingTrip.getEndTime())
                 .isDomestic(existingTrip.getIsDomestic())
                 .build();
 
-        updateRequest.updateFromTripCreateRequest(tripUpdateRequest);
+        tripPatchTimeValidatorUtils.startTimeCheckFromPatchRequest(tripPatchRequest,updateRequest.getEndTime());
+        tripPatchTimeValidatorUtils.endTimeCheckFromPatchRequest(tripPatchRequest,updateRequest.getStartTime());
+        updateRequest.PatchFromTripPatchRequest(tripPatchRequest);
         existingTrip.updateColumns(updateRequest);
 
-        return TripUpdateResponse.fromEntity(existingTrip);
+        return TripPatchResponse.fromEntity(existingTrip);
 
     }
 
