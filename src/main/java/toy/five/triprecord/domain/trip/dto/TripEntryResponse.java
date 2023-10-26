@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyResponse;
-import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyResponse;
-import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyResponse;
+import toy.five.triprecord.domain.jouney.dto.journey_create.response.LodgmentJourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.journey_create.response.MoveJourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.journey_create.response.VisitJourneyCreateResponse;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
 import java.time.LocalDateTime;
@@ -20,9 +20,9 @@ public class TripEntryResponse {
 
     private Long id;
     private String name;
-    private List<MoveJourneyResponse> moveJourneys;
-    private List<LodgmentJourneyResponse> lodgmentJourneys;
-    private List<VisitJourneyResponse> visitJourneys;
+    private List<MoveJourneyCreateResponse> moveJourneys;
+    private List<LodgmentJourneyCreateResponse> lodgmentJourneys;
+    private List<VisitJourneyCreateResponse> visitJourneys;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Boolean isDomestic;
@@ -32,11 +32,11 @@ public class TripEntryResponse {
                 .id(trip.getId())
                 .name(trip.getName())
                 .moveJourneys(trip.getMoveJourneys().stream()
-                        .map(MoveJourneyResponse::fromEntity).toList())
+                        .map(MoveJourneyCreateResponse::fromEntity).toList())
                 .lodgmentJourneys(trip.getLodgmentJourneys().stream()
-                        .map(LodgmentJourneyResponse::fromEntity).toList())
+                        .map(LodgmentJourneyCreateResponse::fromEntity).toList())
                 .visitJourneys(trip.getVisitJourneys().stream()
-                        .map(VisitJourneyResponse::fromEntity).toList())
+                        .map(VisitJourneyCreateResponse::fromEntity).toList())
                 .startTime(trip.getStartTime())
                 .endTime(trip.getEndTime())
                 .isDomestic(trip.getIsDomestic())
