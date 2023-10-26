@@ -43,9 +43,6 @@ public class TripService {
 
     @Transactional
     public TripCreateResponse createTrip(TripCreateRequest tripCreateRequest) {
-
-
-
         Trip newTrip = Trip.builder()
                 .name(tripCreateRequest.getName())
                 .startTime(tripCreateRequest.getStartTime())
@@ -59,10 +56,19 @@ public class TripService {
     @Transactional
     public TripUpdateResponse updateTrip(Long tripId, TripUpdateRequest tripUpdateRequest) {
 
-        Trip findTrip = findTripById(tripId);
-        findTrip.updateColumns(tripUpdateRequest);
+        Trip existingTrip = tripRepository.findById(tripId).orElseThrow(RuntimeException::new);
 
-        return TripUpdateResponse.fromEntity(findTrip);
+        TripUpdateRequest updateRequest = TripUpdateRequest.builder()
+                .name(existingTrip.getName())
+                .startTime(existingTrip.getStartTime())
+                .endTime(existingTrip.getEndTime())
+                .isDomestic(existingTrip.getIsDomestic())
+                .build();
+
+        updateRequest.updateFromTripCreateRequest(tripUpdateRequest);
+        existingTrip.updateColumns(updateRequest);
+
+        return TripUpdateResponse.fromEntity(existingTrip);
 
     }
 
