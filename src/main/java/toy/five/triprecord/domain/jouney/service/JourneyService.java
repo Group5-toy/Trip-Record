@@ -2,7 +2,6 @@ package toy.five.triprecord.domain.jouney.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toy.five.triprecord.domain.jouney.dto.journey_create.request.JourneyCreateRequest;
@@ -13,11 +12,9 @@ import toy.five.triprecord.domain.jouney.dto.journey_create.response.JourneyCrea
 import toy.five.triprecord.domain.jouney.dto.journey_create.response.LodgmentJourneyCreateResponse;
 import toy.five.triprecord.domain.jouney.dto.journey_create.response.MoveJourneyCreateResponse;
 import toy.five.triprecord.domain.jouney.dto.journey_create.response.VisitJourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_update.request.JourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.journey_update.request.LodgmentJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.journey_update.request.MoveJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.journey_update.request.VisitJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_update.response.JourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.dto.journey_update.response.LodgmentJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.dto.journey_update.response.MoveJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.dto.journey_update.response.VisitJourneyUpdateResponse;
@@ -30,12 +27,7 @@ import toy.five.triprecord.domain.jouney.repository.VisitJourneyRepository;
 import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -65,44 +57,17 @@ public class JourneyService {
     @Transactional
     public JourneyCreateResponse saveJourneys(Long tripId, JourneyCreateRequest request) {
 
-        
-        Trip trip = findTripById(tripId);
-
         List<MoveJourneyCreateRequest> moveJourneyDtos = request.getMoves();//이동
         List<LodgmentJourneyCreateRequest> lodgmentJourneyDtos = request.getLodgments();//숙박
         List<VisitJourneyCreateRequest> visitJourneyDtos = request.getVisits();//체류
 
+        // 여기다 출발시간, 도착 시간 추가 필요
         List<MoveJourney> moveJourneys =
-                moveJourneyDtos.stream().map(journeyRequest ->
-                                MoveJourney.builder()
-                                    .trip(findTripById(tripId))
-                                    .name(journeyRequest.getName())
-                                    .vehicle(journeyRequest.getVehicle())
-                                    .startPoint(journeyRequest.getStartPoint())
-                                    .endPoint(journeyRequest.getEndPoint())
-                                    .type(journeyRequest.getType())
-                                    .build()
-                        ).toList();
-
+                moveJourneysToReponses(tripId, moveJourneyDtos);
         List<LodgmentJourney> lodgmentJourneys =
-                lodgmentJourneyDtos.stream().map(journeyRequest ->
-                        LodgmentJourney.builder()
-                                .trip(findTripById(tripId))
-                                .name(journeyRequest.getName())
-                                .dormitoryName(journeyRequest.getDormitoryName())
-                                .type(journeyRequest.getType())
-                                .build()
-                        ).toList();
-
-        List<VisitJourney> visitJourneys =
-                visitJourneyDtos.stream().map(journeyRequest ->
-                        VisitJourney.builder()
-                                .trip(findTripById(tripId))
-                                .name(journeyRequest.getName())
-                                .location(journeyRequest.getLocation())
-                                .type(journeyRequest.getType())
-                                .build()
-                        ).toList();
+                lodgmentJourneysToResponses(tripId, lodgmentJourneyDtos);
+        List<VisitJourney> visitJourneys = 
+                visitJourneysToResponses(tripId, visitJourneyDtos);
 
         List<MoveJourney> savedMoveJourneys =
                 moveJourneyRepository.saveAll(moveJourneys);
@@ -118,50 +83,106 @@ public class JourneyService {
         List<VisitJourneyCreateResponse> visitJourneyCreateResponses =
                 savedVisitJourneys.stream().map(VisitJourneyCreateResponse::fromEntity).toList();
 
+        return JourneyCreateResponse.of(
+                moveJourneyCreateResponses,
+                visitJourneyCreateResponses,
+                lodgmentJourneyCreateResponses
+        );
+    }
 
-        return JourneyCreateResponse.of(moveJourneyCreateResponses, visitJourneyCreateResponses, lodgmentJourneyCreateResponses);
+    private List<VisitJourney> visitJourneysToResponses(Long tripId, List<VisitJourneyCreateRequest> visitJourneyDtos) {
+        List<VisitJourney> visitJourneys =
+                visitJourneyDtos.stream().map(journeyRequest ->
+                        VisitJourney.builder()
+                                .trip(findTripById(tripId))
+                                .name(journeyRequest.getName())
+                                .location(journeyRequest.getLocation())
+                                .type(journeyRequest.getType())
+                                .build()
+                        ).toList();
+        return visitJourneys;
+    }
+
+    private List<LodgmentJourney> lodgmentJourneysToResponses(Long tripId, List<LodgmentJourneyCreateRequest> lodgmentJourneyDtos) {
+        List<LodgmentJourney> lodgmentJourneys =
+                lodgmentJourneyDtos.stream().map(journeyRequest ->
+                        LodgmentJourney.builder()
+                                .trip(findTripById(tripId))
+                                .name(journeyRequest.getName())
+                                .dormitoryName(journeyRequest.getDormitoryName())
+                                .type(journeyRequest.getType())
+                                .build()
+                        ).toList();
+        return lodgmentJourneys;
+    }
+
+    private List<MoveJourney> moveJourneysToReponses(Long tripId, List<MoveJourneyCreateRequest> moveJourneyDtos) {
+        List<MoveJourney> moveJourneys =
+                moveJourneyDtos.stream().map(journeyRequest ->
+                                MoveJourney.builder()
+                                    .trip(findTripById(tripId))
+                                    .name(journeyRequest.getName())
+                                    .vehicle(journeyRequest.getVehicle())
+                                    .startPoint(journeyRequest.getStartPoint())
+                                    .endPoint(journeyRequest.getEndPoint())
+                                    .type(journeyRequest.getType())
+                                    .build()
+                        ).toList();
+        return moveJourneys;
     }
 
     @Transactional
-    public JourneyUpdateResponse modifyJourney(Long journeyId, JourneyUpdateRequest request) {
+    public MoveJourneyUpdateResponse modifyMoveJourney (
+            Long journeyId,
+            MoveJourneyUpdateRequest updateRequest
+    ){
+        MoveJourney findJourney = moveJourneyRepository.findById(journeyId)
+                .orElseThrow(RuntimeException::new);    //.orElseThrow(()->CustomException(ERRORCODE.NO_EXIST)
 
-        if(request.getMoves().isEmpty() && !request.getVisits().isEmpty() && !request.getLodgments().isEmpty()) {
-            // error 처리
-        } else if (!request.getMoves().isEmpty()) {
-            System.out.println("선택됨!");
-            MoveJourney existMoveJourney = moveJourneyRepository.getReferenceById(journeyId);
-            MoveJourneyUpdateRequest updateRequest = request.getMoves().get(0);
-            MoveJourneyUpdateRequest existRequest  = MoveJourneyUpdateRequest.builder()
-                    .name(existMoveJourney.getName())
-                    .vehicle(existMoveJourney.getVehicle())
-                    .startPoint(existMoveJourney.getStartPoint())
-                    .endPoint(existMoveJourney.getEndPoint())
-                    .build();
-            existRequest.updateCheck(updateRequest);
-            existMoveJourney.updateEntity(updateRequest);
-            return JourneyUpdateResponse.of(Collections.singletonList(MoveJourneyUpdateResponse.fromEntity(existMoveJourney)), null, null);
-        } else if (!request.getVisits().isEmpty()) {
-            VisitJourney existVisitJourney = visitJourneyRepository.getReferenceById(journeyId);
-            VisitJourneyUpdateRequest updateRequest = request.getVisits().get(0);
-            VisitJourneyUpdateRequest existRequest  = VisitJourneyUpdateRequest.builder()
-                    .name(existVisitJourney.getName())
-                    .location(existVisitJourney.getLocation())
-                    .build();
-            existRequest.updateCheck(updateRequest);
-            existVisitJourney.updateEntity(updateRequest);
-            return JourneyUpdateResponse.of(null, Collections.singletonList(VisitJourneyUpdateResponse.fromEntity(existVisitJourney)), null);
-        } else if (!request.getLodgments().isEmpty()) {
-            LodgmentJourney existLodgmentJourney = lodgmentJourneyRepository.getReferenceById(journeyId);
-            LodgmentJourneyUpdateRequest updateRequest = request.getLodgments().get(0);
-            LodgmentJourneyUpdateRequest existRequest  = LodgmentJourneyUpdateRequest.builder()
-                    .name(existLodgmentJourney.getName())
-                    .dormitoryName(existLodgmentJourney.getDormitoryName())
-                    .build();
-            existRequest.updateCheck(updateRequest);
-            existLodgmentJourney.updateEntity(updateRequest);
-            return JourneyUpdateResponse.of(null, null, Collections.singletonList(LodgmentJourneyUpdateResponse.fromEntity(existLodgmentJourney)));
-        }
+        findJourney.setName(updateRequest.getName());
+        findJourney.setVehicle(updateRequest.getVehicle());
+        findJourney.setStartPoint(updateRequest.getStartPoint());
+        findJourney.setEndPoint(updateRequest.getEndPoint());
+        findJourney.setStartTime(updateRequest.getStartTime());
+        findJourney.setEndTime(updateRequest.getEndTime());
 
-        return JourneyUpdateResponse.of(null, null, null);
+        return MoveJourneyUpdateResponse.fromEntity(findJourney);
+
     }
+
+    @Transactional
+    public LodgmentJourneyUpdateResponse modifyLodgmentJourney (
+            Long journeyId,
+            LodgmentJourneyUpdateRequest updateRequest
+    ){
+        LodgmentJourney findJourney = lodgmentJourneyRepository.findById(journeyId)
+                .orElseThrow(RuntimeException::new);    //.orElseThrow(()->CustomException(ERRORCODE.NO_EXIST)
+
+        findJourney.setName(updateRequest.getName());
+        findJourney.setDormitoryName(updateRequest.getDormitoryName());
+        findJourney.setStartTime(updateRequest.getStartTime());
+        findJourney.setEndTime(updateRequest.getEndTime());
+
+        return LodgmentJourneyUpdateResponse.fromEntity(findJourney);
+
+    }
+
+    @Transactional
+    public VisitJourneyUpdateResponse modifyVisitJourney (
+            Long journeyId,
+            VisitJourneyUpdateRequest updateRequest
+    ){
+        VisitJourney findJourney = visitJourneyRepository.findById(journeyId)
+                .orElseThrow(RuntimeException::new);    //.orElseThrow(()->CustomException(ERRORCODE.NO_EXIST)
+
+        findJourney.setName(updateRequest.getName());
+        findJourney.setLocation(updateRequest.getLocation());
+        findJourney.setStartTime(updateRequest.getStartTime());
+        findJourney.setEndTime(updateRequest.getEndTime());
+
+        return VisitJourneyUpdateResponse.fromEntity(findJourney);
+
+    }
+
+
 }
