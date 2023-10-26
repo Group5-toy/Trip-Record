@@ -28,25 +28,27 @@ public class TripValidation<T> {
         else if (tripRequest instanceof TripUpdateRequest) {
             TripUpdateRequest updateRequest = (TripUpdateRequest) tripRequest;
 
-            if (updateRequest.getStartTime() == null || updateRequest.getEndTime() == null) {
-                throw new BaseException(ErrorCode.TRIP_INVALID_TIME);
-            }
-            if (updateRequest.getStartTime().isAfter(updateRequest.getEndTime())) {
+            if (updateRequest.getStartTime() != null && updateRequest.getEndTime() != null &&updateRequest.getStartTime().isAfter(updateRequest.getEndTime())) {
                 throw new BaseException(ErrorCode.TRIP_INVALID_TIME);
             }
         }
 
     }
 
-    public void validateNameDomesticTrip(T tripRequest) {
+    public void validatePostNameDomesticTrip(T tripRequest) {
         if (tripRequest instanceof TripCreateRequest) {
             TripCreateRequest createRequest = (TripCreateRequest) tripRequest;
             if (createRequest.getName().isEmpty() || createRequest.getIsDomestic() == null) {
                 throw new BaseException(ErrorCode.TRIP_INVALID_PARAMETER);
             }
-        } else if (tripRequest instanceof TripUpdateRequest) {
+        }
+    }
+
+    public void validatePutAllTrip(T tripRequest) {
+        if (tripRequest instanceof TripUpdateRequest) {
             TripUpdateRequest updateRequest = (TripUpdateRequest) tripRequest;
-            if (updateRequest.getName().isEmpty() || updateRequest.getIsDomestic() == null) {
+
+            if (updateRequest.getName().isEmpty() && updateRequest.getIsDomestic() == null && updateRequest.getStartTime() == null && updateRequest.getEndTime() == null) {
                 throw new BaseException(ErrorCode.TRIP_INVALID_PARAMETER);
             }
         }

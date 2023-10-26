@@ -50,7 +50,7 @@ public class TripController {
 
     @PostMapping
     public ResponseEntity<ApiResponse> createTrip(@RequestBody TripCreateRequest tripCreateRequest) {
-        tripValidation.validateNameDomesticTrip(tripCreateRequest);
+        tripValidation.validatePostNameDomesticTrip(tripCreateRequest);
         tripValidation.validateTimeTrip(tripCreateRequest);
 
         TripCreateResponse savedTrip = tripService.createTrip(tripCreateRequest);
@@ -70,7 +70,7 @@ public class TripController {
 
     @PutMapping("/{tripId}")
     public ResponseEntity<ApiResponse> updateTrip(@PathVariable Long tripId, @RequestBody TripUpdateRequest tripUpdateRequest) {
-        tripValidation.validateNameDomesticTrip(tripUpdateRequest);
+        tripValidation.validatePutAllTrip(tripUpdateRequest);
         tripValidation.validateTimeTrip(tripUpdateRequest);
 
         TripUpdateResponse savedTrip = tripService.updateTrip(tripId,tripUpdateRequest);
