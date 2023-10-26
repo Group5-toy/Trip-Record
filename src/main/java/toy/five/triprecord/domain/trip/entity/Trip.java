@@ -48,19 +48,27 @@ public class Trip extends BaseTimeEntity {
     private Boolean isDomestic;
 
     private void updateName(String name) {
-        this.name = name;
+        if (!name.isEmpty()) {
+            this.name = name;
+        }
     }
 
     private void updateStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+        if (startTime != null) {
+            this.startTime = startTime;
+        }
     }
 
     private void updateEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+        if (endTime != null) {
+            this.endTime = endTime;
+        }
     }
 
     private void updateIsDomestic(Boolean isDomestic) {
-        this.isDomestic = isDomestic;
+        if (isDomestic != null) {
+            this.isDomestic = isDomestic;
+        }
     }
 
 
