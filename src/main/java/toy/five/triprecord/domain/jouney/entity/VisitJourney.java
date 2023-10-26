@@ -8,11 +8,12 @@ import toy.five.triprecord.domain.jouney.dto.journey_update.request.VisitJourney
 import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.global.common.BaseTimeEntity;
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-public class VisitJourney extends BaseTimeEntity {
+public class VisitJourney extends BaseJourney {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
