@@ -1,24 +1,21 @@
-package toy.five.triprecord.domain.jouney.dto.response;
+package toy.five.triprecord.domain.jouney.dto.journey_update.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.annotation.LastModifiedDate;
 import toy.five.triprecord.domain.jouney.entity.JourneyType;
 import toy.five.triprecord.domain.jouney.entity.MoveJourney;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Locale;
 
 @Getter
 @AllArgsConstructor
 //@NoArgsConstructor
 @Builder
-public class MoveJourneyResponse {
+public class MoveJourneyUpdateResponse {
 
-    private Trip trip;
+    private Long tripId;
     private String name;
     private String vehicle;
     private String startPoint;
@@ -28,9 +25,9 @@ public class MoveJourneyResponse {
     private LocalDateTime modifiedTime;
 
 
-    public static MoveJourneyResponse fromEntity(MoveJourney entity) {
-        return MoveJourneyResponse.builder()
-                .trip(entity.getTrip())
+    public static MoveJourneyUpdateResponse fromEntity(MoveJourney entity) {
+        return MoveJourneyUpdateResponse.builder()
+                .tripId(entity.getTrip().getId())
                 .name(entity.getName())
                 .vehicle(entity.getVehicle())
                 .startPoint(entity.getStartPoint())

@@ -1,4 +1,4 @@
-package toy.five.triprecord.domain.jouney.dto.request;
+package toy.five.triprecord.domain.jouney.dto.journey_update.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,14 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import toy.five.triprecord.domain.jouney.entity.JourneyType;
 import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
-import toy.five.triprecord.domain.jouney.entity.MoveJourney;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LodgmentJourneyRequest {
+public class LodgmentJourneyUpdateRequest {
 
     private String name;
     private String dormitoryName;
@@ -27,6 +26,15 @@ public class LodgmentJourneyRequest {
                 .dormitoryName(this.dormitoryName)
                 .type(this.type)
                 .build();
+    }
+
+    public void updateCheck(LodgmentJourneyUpdateRequest request) {
+        if(request.getName() != null) {
+            this.name = request.getName();
+        }
+        if(request.getName() != null) {
+            this.dormitoryName = request.getDormitoryName();
+        }
     }
 
 }
