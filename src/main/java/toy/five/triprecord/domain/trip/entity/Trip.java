@@ -1,15 +1,13 @@
 package toy.five.triprecord.domain.trip.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.*;
 import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
 import toy.five.triprecord.domain.jouney.entity.MoveJourney;
 import toy.five.triprecord.domain.jouney.entity.VisitJourney;
-import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
+import toy.five.triprecord.domain.trip.dto.request.TripPatchRequest;
 import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
-import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 import toy.five.triprecord.global.common.BaseTimeEntity;
 
 import java.time.LocalDateTime;
@@ -24,6 +22,7 @@ public class Trip extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @Column(length = 30)
@@ -72,7 +71,14 @@ public class Trip extends BaseTimeEntity {
     }
 
 
-    public void updateColumns(TripUpdateRequest tripUpdateRequest) {
+    public void updateColumns(TripPatchRequest tripPatchRequest) {
+        updateName(tripPatchRequest.getName());
+        updateStartTime(tripPatchRequest.getStartTime());
+        updateEndTime(tripPatchRequest.getEndTime());
+        updateIsDomestic(tripPatchRequest.getIsDomestic());
+    }
+
+    public void updateAllColumns(TripUpdateRequest tripUpdateRequest) {
         updateName(tripUpdateRequest.getName());
         updateStartTime(tripUpdateRequest.getStartTime());
         updateEndTime(tripUpdateRequest.getEndTime());
