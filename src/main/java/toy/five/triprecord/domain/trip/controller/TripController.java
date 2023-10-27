@@ -46,25 +46,14 @@ public class TripController {
         return tripService.getAllTripsPaging(pageable);
     }
 
-    /**
-     * 여행 등록 요청
-     *
-     * @param tripCreateRequest {@link TripCreateRequest} 여행 등록 요청 파라미터
-     * @return {@link ResponseEntity}
-     **/
+
     @PostMapping
     public ResponseEntity<ApiResponse> createTrip(@Valid @RequestBody TripCreateRequest tripCreateRequest) {
         TripCreateResponse savedTrip = tripService.createTrip(tripCreateRequest);
         return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(savedTrip).build());
     }
 
-    /**
-     * 여행 수정 요청
-     *
-     * @param tripId {@link Long} 여행글 ID 요청 파라미터
-     * @param tripUpdateRequest {@link TripCreateRequest} 여행 수정 내용 요청 파라미터
-     * @return {@link ResponseEntity}
-     **/
+
     @PutMapping("/{tripId}")
     public ResponseEntity<ApiResponse> updateTrip(@NotNull @PathVariable Long tripId, @Valid @RequestBody TripUpdateRequest tripUpdateRequest) {
         TripUpdateResponse savedTrip = tripService.updateTrip(tripId,tripUpdateRequest);

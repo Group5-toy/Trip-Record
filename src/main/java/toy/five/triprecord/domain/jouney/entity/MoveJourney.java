@@ -36,6 +36,7 @@ public class MoveJourney extends BaseJourney {
     @Column(nullable = false)
     private String endPoint;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private JourneyType type;
 

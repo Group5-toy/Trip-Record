@@ -16,6 +16,7 @@ import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
 import toy.five.triprecord.domain.trip.validation.patch.TripPatchTimeValidatorUtils;
 import toy.five.triprecord.global.exception.BaseException;
+import toy.five.triprecord.global.exception.ErrorCode;
 
 import java.util.List;
 
@@ -38,13 +39,13 @@ public class TripService {
 
     @Transactional(readOnly = true)
     public List<TripEntryResponse> getAllTripsPaging(Pageable pageable) {
-        return tripRepository.findAll(pageable)    //Nullable 발생 시 처리 예정
+        return tripRepository.findAll(pageable)
                 .map(TripEntryResponse::fromEntity).getContent();
     }
 
     private Trip findTripById(Long id) {
         return tripRepository.findById(id)
-                .orElseThrow(() -> new BaseException(TRIP_NO_EXIST));    //Exception 별도 처리 예정
+                .orElseThrow(() -> new BaseException(TRIP_NO_EXIST));
     }
 
     @Transactional
@@ -63,7 +64,9 @@ public class TripService {
     @Transactional
     public TripUpdateResponse updateTrip(Long tripId,TripUpdateRequest tripUpdateRequest) {
 
-        Trip existingTrip = tripRepository.findById(tripId).orElseThrow(RuntimeException::new);
+        Trip existingTrip = tripRepository.findById(tripId)
+                .orElseThrow(() -> new BaseException(ErrorCode.TRIP_NO_EXIST));
+
 
         existingTrip.updateAllColumns(tripUpdateRequest);
 
@@ -74,7 +77,8 @@ public class TripService {
     @Transactional
     public TripPatchResponse patchTrip(Long tripId, TripPatchRequest tripPatchRequest) {
 
-        Trip existingTrip = tripRepository.findById(tripId).orElseThrow(RuntimeException::new);
+        Trip existingTrip = tripRepository.findById(tripId)
+                .orElseThrow(() -> new BaseException(ErrorCode.TRIP_NO_EXIST));
 
         TripPatchRequest updateRequest = TripPatchRequest.builder()
                 .name(existingTrip.getName())

@@ -29,6 +29,7 @@ public class VisitJourney extends BaseJourney {
     @Column(nullable = false, length = 100)
     private String location;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private JourneyType type;
 
