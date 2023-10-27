@@ -1,4 +1,4 @@
-package toy.five.triprecord.domain.trip.validation.patchtime;
+package toy.five.triprecord.domain.trip.validation.patch;
 
 
 import jakarta.validation.Constraint;

@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import toy.five.triprecord.domain.trip.validation.patchtime.TripPatchTimeConstraint;
+import toy.five.triprecord.domain.trip.validation.patch.TripPatchTimeConstraint;
 import java.time.LocalDateTime;
 
 @Getter

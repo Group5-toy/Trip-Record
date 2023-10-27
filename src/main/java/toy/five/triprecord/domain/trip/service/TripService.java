@@ -10,7 +10,7 @@ import toy.five.triprecord.domain.trip.dto.request.TripPatchRequest;
 import toy.five.triprecord.domain.trip.dto.response.TripPatchResponse;
 import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
-import toy.five.triprecord.domain.trip.validation.patchtime.TripPatchTimeValidatorUtils;
+import toy.five.triprecord.domain.trip.validation.patch.TripPatchTimeValidatorUtils;
 import toy.five.triprecord.global.exception.BaseException;
 
 import java.util.List;
