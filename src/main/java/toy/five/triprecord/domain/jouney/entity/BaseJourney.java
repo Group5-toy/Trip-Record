@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import toy.five.triprecord.global.common.BaseTimeEntity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Setter

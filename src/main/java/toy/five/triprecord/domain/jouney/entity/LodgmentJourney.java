@@ -1,5 +1,6 @@
 package toy.five.triprecord.domain.jouney.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

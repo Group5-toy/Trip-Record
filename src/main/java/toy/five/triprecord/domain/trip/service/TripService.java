@@ -6,18 +6,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
+import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
+import toy.five.triprecord.domain.trip.dto.request.TripPatchRequest;
+import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
+import toy.five.triprecord.domain.trip.dto.response.TripCreateResponse;
+import toy.five.triprecord.domain.trip.dto.response.TripPatchResponse;
+import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
+import toy.five.triprecord.domain.trip.validation.patch.TripPatchTimeValidatorUtils;
 import toy.five.triprecord.global.exception.BaseException;
 
 import java.util.List;
 
 import static toy.five.triprecord.global.exception.ErrorCode.TRIP_NO_EXIST;
-
-import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
-import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
-import toy.five.triprecord.domain.trip.dto.response.TripCreateResponse;
-import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,8 @@ import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 public class TripService {
 
     private final TripRepository tripRepository;
+    private final TripPatchTimeValidatorUtils tripPatchTimeValidatorUtils;
+
 
     @Transactional(readOnly = true)
     public TripEntryResponse getTripById(Long tripId) {
@@ -33,7 +37,7 @@ public class TripService {
     }
 
     @Transactional(readOnly = true)
-    public List<TripEntryResponse> getAllTrips(Pageable pageable) {
+    public List<TripEntryResponse> getAllTripsPaging(Pageable pageable) {
         return tripRepository.findAll(pageable)    //Nullable 발생 시 처리 예정
                 .map(TripEntryResponse::fromEntity).getContent();
     }
@@ -57,15 +61,35 @@ public class TripService {
     }
 
     @Transactional
-    public TripUpdateResponse updateTrip(Long tripId, TripUpdateRequest tripUpdateRequest) {
+    public TripUpdateResponse updateTrip(Long tripId,TripUpdateRequest tripUpdateRequest) {
 
-        Trip findTrip = findTripById(tripId);
-        findTrip.updateColumns(tripUpdateRequest);
+        Trip existingTrip = tripRepository.findById(tripId).orElseThrow(RuntimeException::new);
 
-        return TripUpdateResponse.fromEntity(findTrip);
+        existingTrip.updateAllColumns(tripUpdateRequest);
+
+        return TripUpdateResponse.fromEntity(existingTrip);
 
     }
 
+    @Transactional
+    public TripPatchResponse patchTrip(Long tripId, TripPatchRequest tripPatchRequest) {
 
+        Trip existingTrip = tripRepository.findById(tripId).orElseThrow(RuntimeException::new);
+
+        TripPatchRequest updateRequest = TripPatchRequest.builder()
+                .name(existingTrip.getName())
+                .startTime(existingTrip.getStartTime())
+                .endTime(existingTrip.getEndTime())
+                .isDomestic(existingTrip.getIsDomestic())
+                .build();
+
+        tripPatchTimeValidatorUtils.startTimeCheckFromPatchRequest(tripPatchRequest,updateRequest.getEndTime());
+        tripPatchTimeValidatorUtils.endTimeCheckFromPatchRequest(tripPatchRequest,updateRequest.getStartTime());
+        updateRequest.PatchFromTripPatchRequest(tripPatchRequest);
+        existingTrip.updateColumns(updateRequest);
+
+        return TripPatchResponse.fromEntity(existingTrip);
+
+    }
 }
 
