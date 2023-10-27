@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyCreateResponse;
 import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyCreateResponse;
 import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyCreateResponse;
+import toy.five.triprecord.domain.trip.entity.Domestic;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ public class TripEntryResponse {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     @Enumerated(EnumType.STRING)
-    private Boolean isDomestic;
+    private Domestic domestic;
 
     public static TripEntryResponse fromEntity(Trip trip) {
         return TripEntryResponse.builder()
@@ -42,7 +43,7 @@ public class TripEntryResponse {
                         .map(VisitJourneyCreateResponse::fromEntity).toList())
                 .startTime(trip.getStartTime())
                 .endTime(trip.getEndTime())
-                .isDomestic(trip.getIsDomestic())
+                .domestic(trip.getDomestic())
                 .build();
     }
 }

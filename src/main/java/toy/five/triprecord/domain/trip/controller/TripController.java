@@ -17,6 +17,7 @@ import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
 import toy.five.triprecord.domain.trip.dto.response.TripCreateResponse;
 import toy.five.triprecord.domain.trip.dto.response.TripPatchResponse;
 import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
+import toy.five.triprecord.domain.trip.entity.Domestic;
 import toy.five.triprecord.domain.trip.service.TripService;
 import toy.five.triprecord.global.exception.ApiResponse;
 import org.springframework.http.HttpStatus;
@@ -49,25 +50,14 @@ public class TripController {
         return tripService.getAllTripsPaging(pageable);
     }
 
-    /**
-     * 여행 등록 요청
-     *
-     * @param tripCreateRequest {@link TripCreateRequest} 여행 등록 요청 파라미터
-     * @return {@link ResponseEntity}
-     **/
+
     @PostMapping
     public ResponseEntity<ApiResponse> createTrip(@Valid @RequestBody TripCreateRequest tripCreateRequest) {
         TripCreateResponse savedTrip = tripService.createTrip(tripCreateRequest);
         return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(savedTrip).build());
     }
 
-    /**
-     * 여행 수정 요청
-     *
-     * @param tripId {@link Long} 여행글 ID 요청 파라미터
-     * @param tripUpdateRequest {@link TripCreateRequest} 여행 수정 내용 요청 파라미터
-     * @return {@link ResponseEntity}
-     **/
+
     @PutMapping("/{tripId}")
     public ResponseEntity<ApiResponse> updateTrip(@NotNull @PathVariable Long tripId, @Valid @RequestBody TripUpdateRequest tripUpdateRequest) {
         TripUpdateResponse savedTrip = tripService.updateTrip(tripId,tripUpdateRequest);
@@ -91,7 +81,7 @@ public class TripController {
                         .name("여행1")
                         .startTime(LocalDateTime.now())
                         .endTime(LocalDateTime.now())
-                        .isDomestic(true)
+                        .domestic(Domestic.ABROAD)
                         .build()
         );
 
@@ -100,7 +90,7 @@ public class TripController {
                         .name("여행2")
                         .startTime(LocalDateTime.now())
                         .endTime(LocalDateTime.now())
-                        .isDomestic(false)
+                        .domestic(Domestic.DOMESTIC)
                         .build()
         );
     }

@@ -16,9 +16,7 @@ import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyUpdateReques
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.VisitJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.service.JourneyService;
-
 import java.util.List;
-
 import static toy.five.triprecord.domain.jouney.entity.JourneyType.*;
 
 @Slf4j

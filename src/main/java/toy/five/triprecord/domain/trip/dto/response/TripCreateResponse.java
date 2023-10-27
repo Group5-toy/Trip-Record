@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import toy.five.triprecord.domain.trip.entity.Domestic;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ public class TripCreateResponse {
     private String name;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Boolean isDomestic;
+    private Domestic domestic;
 
 
     public static TripCreateResponse fromEntity(Trip entity) {
@@ -31,7 +32,7 @@ public class TripCreateResponse {
                 .name(entity.getName())
                 .startTime(entity.getStartTime())
                 .endTime(entity.getEndTime())
-                .isDomestic(entity.getIsDomestic())
+                .domestic(entity.getDomestic())
                 .build();
     }
 

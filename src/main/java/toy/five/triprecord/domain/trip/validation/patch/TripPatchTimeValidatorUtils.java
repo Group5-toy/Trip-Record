@@ -21,4 +21,6 @@ public class TripPatchTimeValidatorUtils {
             throw new BaseException(ErrorCode.TRIP_INVALID_TIME);
         }
     }
+
+
 }

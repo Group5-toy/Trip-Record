@@ -43,8 +43,9 @@ public class Trip extends BaseTimeEntity {
     @Column
     private LocalDateTime endTime;
 
+    @Enumerated(EnumType.STRING)
     @Column
-    private Boolean isDomestic;
+    private Domestic domestic;
 
     private void updateName(String name) {
         if (!name.isEmpty()) {
@@ -64,9 +65,9 @@ public class Trip extends BaseTimeEntity {
         }
     }
 
-    private void updateIsDomestic(Boolean isDomestic) {
-        if (isDomestic != null) {
-            this.isDomestic = isDomestic;
+    private void updateIsDomestic(Domestic domestic) {
+        if (domestic != null) {
+            this.domestic = domestic;
         }
     }
 
@@ -75,14 +76,14 @@ public class Trip extends BaseTimeEntity {
         updateName(tripPatchRequest.getName());
         updateStartTime(tripPatchRequest.getStartTime());
         updateEndTime(tripPatchRequest.getEndTime());
-        updateIsDomestic(tripPatchRequest.getIsDomestic());
+        updateIsDomestic(tripPatchRequest.getDomestic());
     }
 
     public void updateAllColumns(TripUpdateRequest tripUpdateRequest) {
         updateName(tripUpdateRequest.getName());
         updateStartTime(tripUpdateRequest.getStartTime());
         updateEndTime(tripUpdateRequest.getEndTime());
-        updateIsDomestic(tripUpdateRequest.getIsDomestic());
+        updateIsDomestic(tripUpdateRequest.getDomestic());
     }
 
 
