@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
             } else if (TRIP_PARAMETER_ONE_ERROR.getMessage().equals(errorMessage)) {
                 baseException = new BaseException(ErrorCode.TRIP_INVALID_PARAMETER);
             } else {
-                baseException = new BaseException(ErrorCode.TRIP_SERVER_ERROR);
+                baseException = new BaseException(ErrorCode.TRIP_VALIDATE_ERROR);
             }
         } else {
             baseException = new BaseException(ErrorCode.TRIP_IVALID_UPDATE);
