@@ -34,7 +34,10 @@ import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
 import toy.five.triprecord.global.exception.BaseException;
 
+import javax.swing.text.html.Option;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static toy.five.triprecord.global.exception.ErrorCode.JOURNEY_NO_EXIST;
@@ -171,12 +174,11 @@ public class JourneyService {
 
     }
 
-
-
-
     private List<VisitJourney> visitJourneysToResponses(Long tripId, List<VisitJourneyCreateRequest> visitJourneyDtos) {
         List<VisitJourney> visitJourneys =
-                visitJourneyDtos.stream().map(journeyRequest ->
+                Optional.ofNullable(visitJourneyDtos)
+                        .orElseGet(Collections::emptyList)
+                        .stream().map(journeyRequest ->
                         VisitJourney.builder()
                                 .trip(findTripById(tripId))
                                 .name(journeyRequest.getName())
@@ -191,7 +193,9 @@ public class JourneyService {
 
     private List<LodgmentJourney> lodgmentJourneysToResponses(Long tripId, List<LodgmentJourneyCreateRequest> lodgmentJourneyDtos) {
         List<LodgmentJourney> lodgmentJourneys =
-                lodgmentJourneyDtos.stream().map(journeyRequest ->
+                Optional.ofNullable(lodgmentJourneyDtos)
+                        .orElseGet(Collections::emptyList)
+                        .stream().map(journeyRequest ->
                         LodgmentJourney.builder()
                                 .trip(findTripById(tripId))
                                 .name(journeyRequest.getName())
@@ -206,7 +210,9 @@ public class JourneyService {
 
     private List<MoveJourney> moveJourneysToReponses(Long tripId, List<MoveJourneyCreateRequest> moveJourneyDtos) {
         List<MoveJourney> moveJourneys =
-                moveJourneyDtos.stream().map(journeyRequest ->
+                Optional.ofNullable(moveJourneyDtos)
+                        .orElseGet(Collections::emptyList)
+                        .stream().map(journeyRequest ->
                                 MoveJourney.builder()
                                     .trip(findTripById(tripId))
                                     .name(journeyRequest.getName())
