@@ -1,5 +1,7 @@
 package toy.five.triprecord.domain.trip.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +27,7 @@ public class TripEntryResponse {
     private List<VisitJourneyCreateResponse> visitJourneys;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    @Enumerated(EnumType.STRING)
     private Boolean isDomestic;
 
     public static TripEntryResponse fromEntity(Trip trip) {
