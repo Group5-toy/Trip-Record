@@ -5,7 +5,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import static toy.five.triprecord.global.exception.ValidationCode.*;
 
-
+//시간 검증
 public class TripCreateTimeConstraintValidator implements ConstraintValidator<TripCreateTimeConstraint, TripCreateRequest> {
 
     @Override
