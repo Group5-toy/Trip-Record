@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toy.five.triprecord.domain.jouney.dto.JourneysDetailResponse;
-import toy.five.triprecord.domain.jouney.dto.LodgmentJourneyDetailResponse;
-import toy.five.triprecord.domain.jouney.dto.MoveJourneyDetailResponse;
-import toy.five.triprecord.domain.jouney.dto.VisitJourneyDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.*;
 import toy.five.triprecord.domain.jouney.dto.request.JourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyCreateRequest;
@@ -35,9 +32,7 @@ import toy.five.triprecord.domain.trip.repository.TripRepository;
 import toy.five.triprecord.global.exception.BaseException;
 
 import javax.swing.text.html.Option;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static toy.five.triprecord.global.exception.ErrorCode.JOURNEY_NO_EXIST;
@@ -66,16 +61,21 @@ public class JourneyService {
     }
 
     @Transactional(readOnly = true)
-    public JourneysDetailResponse getAllJourneysByTripId(Long tripId) {
-        List<MoveJourneyDetailResponse> moveResponses = moveJourneyRepository.findAllByTripId(tripId)
-                .stream().map(MoveJourneyDetailResponse::fromEntity).toList();
-        List<LodgmentJourneyDetailResponse> lodgmentResponses = lodgmentJourneyRepository.findAllByTripId(tripId)
-                .stream().map(LodgmentJourneyDetailResponse::fromEntity).toList();
-        List<VisitJourneyDetailResponse> visitResponses = visitJourneyRepository.findAllByTripId(tripId)
-                .stream().map(VisitJourneyDetailResponse::fromEntity).toList();
+    public List<JourneyDetailResponse> getAllJourneysByTripId(Long tripId) {
 
-        return JourneysDetailResponse.of(moveResponses, visitResponses, lodgmentResponses);
+        log.info("TAG : getAllJourneysByTripId");
+        List<JourneyDetailResponse> journeyResponses = new ArrayList<>();
 
+        moveJourneyRepository.findAllByTripId(tripId).stream()
+                .map(JourneyDetailResponse::fromEntity).forEach(journeyResponses::add);
+        lodgmentJourneyRepository.findAllByTripId(tripId).stream()
+                .map(JourneyDetailResponse::fromEntity).forEach(journeyResponses::add);
+        visitJourneyRepository.findAllByTripId(tripId).stream()
+                .map(JourneyDetailResponse::fromEntity).forEach(journeyResponses::add);
+
+        journeyResponses.sort(Comparator.comparing(JourneyDetailResponse::getStartTime));
+
+        return journeyResponses;
     }
 
     private Trip findTripById(Long tripId) {
