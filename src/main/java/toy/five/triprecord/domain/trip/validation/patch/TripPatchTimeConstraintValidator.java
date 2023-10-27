@@ -40,7 +40,7 @@ public class TripPatchTimeConstraintValidator implements ConstraintValidator<Tri
         return (StringUtils.isBlank(patchRequest.getName())) &&
                 patchRequest.getStartTime() == null &&
                 patchRequest.getEndTime() == null &&
-                patchRequest.getIsDomestic() == null;
+                patchRequest.getDomestic() == null;
 
     }
 

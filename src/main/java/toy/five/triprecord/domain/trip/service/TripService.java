@@ -55,7 +55,7 @@ public class TripService {
                 .name(tripCreateRequest.getName())
                 .startTime(tripCreateRequest.getStartTime())
                 .endTime(tripCreateRequest.getEndTime())
-                .isDomestic(tripCreateRequest.getIsDomestic())
+                .domestic(tripCreateRequest.getDomestic())
                 .build();
 
         return TripCreateResponse.fromEntity(tripRepository.save(newTrip));
@@ -84,11 +84,15 @@ public class TripService {
                 .name(existingTrip.getName())
                 .startTime(existingTrip.getStartTime())
                 .endTime(existingTrip.getEndTime())
-                .isDomestic(existingTrip.getIsDomestic())
+                .domestic(existingTrip.getDomestic())
                 .build();
 
-        tripPatchTimeValidatorUtils.startTimeCheckFromPatchRequest(tripPatchRequest,updateRequest.getEndTime());
-        tripPatchTimeValidatorUtils.endTimeCheckFromPatchRequest(tripPatchRequest,updateRequest.getStartTime());
+        if (tripPatchRequest.getStartTime() == null || tripPatchRequest.getEndTime() == null) {
+            tripPatchTimeValidatorUtils.startTimeCheckFromPatchRequest(tripPatchRequest,updateRequest.getEndTime());
+            tripPatchTimeValidatorUtils.endTimeCheckFromPatchRequest(tripPatchRequest,updateRequest.getStartTime());
+        }
+
+
         updateRequest.PatchFromTripPatchRequest(tripPatchRequest);
         existingTrip.updateColumns(updateRequest);
 

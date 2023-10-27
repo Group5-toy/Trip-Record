@@ -55,7 +55,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiResponse<String>> handleClassCastException(HttpMessageNotReadableException e) {
-        BaseException baseException = new BaseException(ErrorCode.TRIP_BOOLEAN_ERROR);
+        System.out.println("테스트");
+        BaseException baseException = new BaseException(ErrorCode.TRIP_ENUM_ERROR);
 
         return new ResponseEntity<>(
                 ApiResponse.fail(baseException.getStatusCode(), baseException.getMessage()),
