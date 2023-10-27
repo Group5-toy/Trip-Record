@@ -3,9 +3,6 @@ package toy.five.triprecord.domain.jouney.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import toy.five.triprecord.domain.jouney.dto.journey_create.response.LodgmentJourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_create.response.MoveJourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_create.response.VisitJourneyCreateResponse;
 
 import java.util.List;
 

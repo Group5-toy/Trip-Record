@@ -1,4 +1,5 @@
-package toy.five.triprecord.domain.jouney.dto.journey_update.response;
+package toy.five.triprecord.domain.jouney.dto.response;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

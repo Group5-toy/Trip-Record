@@ -1,10 +1,15 @@
 package toy.five.triprecord.domain.jouney.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toy.five.triprecord.domain.jouney.dto.JourneysDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.LodgmentJourneyDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.MoveJourneyDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.VisitJourneyDetailResponse;
 import toy.five.triprecord.domain.jouney.dto.request.JourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyCreateRequest;
@@ -36,6 +41,7 @@ import static toy.five.triprecord.global.exception.ErrorCode.JOURNEY_NO_EXIST;
 import static toy.five.triprecord.global.exception.ErrorCode.TRIP_NO_EXIST;
 import java.util.stream.Stream;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JourneyService {
@@ -151,6 +157,8 @@ public class JourneyService {
             Long journeyId,
             VisitJourneyUpdateRequest updateRequest
     ){
+
+        log.info("Called : JousrenyService.modifyVisitJourney");
         VisitJourney findJourney = visitJourneyRepository.findById(journeyId)
                 .orElseThrow(() -> new BaseException(JOURNEY_NO_EXIST));
 

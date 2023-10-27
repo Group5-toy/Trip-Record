@@ -3,6 +3,7 @@ package toy.five.triprecord.domain.jouney.controller;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import toy.five.triprecord.domain.jouney.dto.JourneysDetailResponse;
@@ -10,19 +11,17 @@ import toy.five.triprecord.domain.jouney.dto.request.JourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.VisitJourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.response.JourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.*;
 import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.VisitJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.service.JourneyService;
 
 import java.util.List;
 
 import static toy.five.triprecord.domain.jouney.entity.JourneyType.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/journey")
 @RestController
@@ -71,6 +70,8 @@ public class JourneyController {
             @PathVariable Long journeyId,
             @RequestBody @Valid VisitJourneyUpdateRequest updateRequest
     ) {
+        log.info("PUT /visit/journeyId HTTPS/1.1");
+
         return journeyService.modifyVisitJourney(journeyId, updateRequest);
     }
 
