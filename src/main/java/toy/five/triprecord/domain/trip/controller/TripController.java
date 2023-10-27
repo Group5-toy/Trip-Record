@@ -33,17 +33,29 @@ public class TripController {
     private final TripService tripService;
 
     @GetMapping("/{tripId}")
-    public TripDetailResponse getTrip(@PathVariable final Long tripId) {
+    public ResponseEntity<ApiResponse> getTrip(@PathVariable final Long tripId) {
 
-        return tripService.getTripById(tripId);
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .status("Success")
+                        .code(HttpStatus.OK.value())
+                        .data(tripService.getTripById(tripId))
+                        .build()
+        );
     }
 
     @GetMapping("/all")
-    public List<TripDetailResponse> getAllTrips(
+    public ResponseEntity<ApiResponse> getAllTrips(
             @PageableDefault(size=5, sort = "startTime", direction = Sort.Direction.ASC)
             Pageable pageable
     ) {
-        return tripService.getAllTripsPaging(pageable);
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .status("Success")
+                        .code(HttpStatus.OK.value())
+                        .data(tripService.getAllTripsPaging(pageable))
+                        .build()
+        );
     }
 
     @PostMapping
