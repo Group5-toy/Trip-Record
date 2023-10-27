@@ -32,7 +32,7 @@ public class JourneyController {
     public JourneyResponse createJourney(@PathVariable Long tripId, @RequestBody JourneyRequest request) {
         return journeyService.saveJourneys(tripId, request);
     }
-    
+
     @PutMapping("/move/{journeyId}")
     public MoveJourneyUpdateResponse updateMoveJourney(
             @PathVariable Long journeyId,
