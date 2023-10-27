@@ -3,13 +3,10 @@ package toy.five.triprecord.domain.trip.validation.patchtime;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
-import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
 import toy.five.triprecord.domain.trip.dto.request.TripPatchRequest;
-import toy.five.triprecord.domain.trip.validation.createtime.TripCreateTimeConstraint;
-import toy.five.triprecord.global.exception.BaseException;
 import toy.five.triprecord.global.exception.ErrorCode;
 
-import static toy.five.triprecord.global.exception.ValidationCode.TRIP_PARAMETER_ERROR;
+
 import static toy.five.triprecord.global.exception.ValidationCode.TRIP_TIME_ERROR;
 
 public class TripPatchTimeConstraintValidator implements ConstraintValidator<TripPatchTimeConstraint, TripPatchRequest> {

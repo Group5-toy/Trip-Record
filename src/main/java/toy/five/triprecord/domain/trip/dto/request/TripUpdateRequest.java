@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import toy.five.triprecord.domain.trip.validation.updatetime.TripUpdateTimeConstraint;
-
 import java.time.LocalDateTime;
 
 @Getter

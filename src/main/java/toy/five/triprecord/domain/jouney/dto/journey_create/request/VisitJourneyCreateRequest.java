@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import toy.five.triprecord.domain.jouney.entity.JourneyType;
-import toy.five.triprecord.domain.jouney.entity.VisitJourney;
-import toy.five.triprecord.domain.trip.entity.Trip;
+
 
 @Getter
 @AllArgsConstructor

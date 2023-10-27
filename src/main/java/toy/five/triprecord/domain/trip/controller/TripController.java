@@ -18,9 +18,7 @@ import toy.five.triprecord.domain.trip.dto.response.TripPatchResponse;
 import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 import toy.five.triprecord.domain.trip.service.TripService;
 import toy.five.triprecord.global.exception.ApiResponse;
-import toy.five.triprecord.global.exception.BaseException;
-import toy.five.triprecord.global.exception.ErrorCode;
-
+import org.springframework.http.HttpStatus;
 import java.util.List;
 
 @Slf4j

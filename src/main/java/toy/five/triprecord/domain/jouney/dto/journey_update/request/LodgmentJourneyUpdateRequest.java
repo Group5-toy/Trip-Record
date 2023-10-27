@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import toy.five.triprecord.domain.jouney.entity.JourneyType;
-import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
-import toy.five.triprecord.domain.trip.entity.Trip;
+
 
 import java.time.LocalDateTime;
 

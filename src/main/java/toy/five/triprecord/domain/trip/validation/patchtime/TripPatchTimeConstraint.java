@@ -3,7 +3,7 @@ package toy.five.triprecord.domain.trip.validation.patchtime;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import toy.five.triprecord.domain.trip.validation.createtime.TripCreateTimeConstraintValidator;
+
 
 import java.lang.annotation.*;
 
