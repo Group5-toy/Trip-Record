@@ -1,18 +1,16 @@
 package toy.five.triprecord.domain.jouney.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-import toy.five.triprecord.domain.jouney.dto.journey_update.request.MoveJourneyUpdateRequest;
+import lombok.experimental.SuperBuilder;
+import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyUpdateRequest;
 import toy.five.triprecord.domain.trip.entity.Trip;
-import toy.five.triprecord.global.common.BaseTimeEntity;
 
-import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Entity
 public class MoveJourney extends BaseJourney {
 

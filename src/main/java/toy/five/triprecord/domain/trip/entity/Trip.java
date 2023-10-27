@@ -63,7 +63,6 @@ public class Trip extends BaseTimeEntity {
         this.isDomestic = isDomestic;
     }
 
-
     public void updateColumns(TripUpdateRequest tripUpdateRequest) {
         updateName(tripUpdateRequest.getName());
         updateStartTime(tripUpdateRequest.getStartTime());
