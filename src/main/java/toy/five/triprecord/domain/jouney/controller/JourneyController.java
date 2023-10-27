@@ -17,9 +17,7 @@ import toy.five.triprecord.domain.jouney.dto.journey_update.response.LodgmentJou
 import toy.five.triprecord.domain.jouney.dto.journey_update.response.MoveJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.dto.journey_update.response.VisitJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.service.JourneyService;
-
 import java.util.List;
-
 import static toy.five.triprecord.domain.jouney.entity.JourneyType.*;
 
 @RequiredArgsConstructor
@@ -109,4 +107,5 @@ public class JourneyController {
         journeyService.saveJourneys(1L, journeyRequest);
 
     }
+
 }
