@@ -1,20 +1,21 @@
 package toy.five.triprecord.domain.jouney.controller;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import toy.five.triprecord.domain.jouney.dto.journey_create.request.JourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_create.request.LodgmentJourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_create.request.MoveJourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_create.request.VisitJourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_create.response.JourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_update.request.LodgmentJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_update.request.MoveJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_update.request.VisitJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_update.response.LodgmentJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_update.response.MoveJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_update.response.VisitJourneyUpdateResponse;
+import toy.five.triprecord.domain.jouney.dto.request.JourneyCreateRequest;
+import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyCreateRequest;
+import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyCreateRequest;
+import toy.five.triprecord.domain.jouney.dto.request.VisitJourneyCreateRequest;
+import toy.five.triprecord.domain.jouney.dto.response.JourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyUpdateRequest;
+import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyUpdateRequest;
+import toy.five.triprecord.domain.jouney.dto.request.VisitJourneyUpdateRequest;
+import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyUpdateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyUpdateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.service.JourneyService;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class JourneyController {
     @PostMapping("/{tripId}")
     public JourneyCreateResponse createJourney(
             @PathVariable Long tripId,
-            @RequestBody JourneyCreateRequest request
+            @RequestBody @Valid JourneyCreateRequest request
     ) {
         return journeyService.saveJourneys(tripId, request);
     }
@@ -44,7 +45,7 @@ public class JourneyController {
     @PutMapping("/move/{journeyId}")
     public MoveJourneyUpdateResponse updateMoveJourney(
             @PathVariable Long journeyId,
-            @RequestBody MoveJourneyUpdateRequest updateRequest
+            @RequestBody @Valid MoveJourneyUpdateRequest updateRequest
     ) {
         return journeyService.modifyMoveJourney(journeyId, updateRequest);
     }
@@ -52,7 +53,7 @@ public class JourneyController {
     @PutMapping("/lodgment/{journeyId}")
     public LodgmentJourneyUpdateResponse updateLodgmentJourney(
             @PathVariable Long journeyId,
-            @RequestBody LodgmentJourneyUpdateRequest updateRequest
+            @RequestBody @Valid LodgmentJourneyUpdateRequest updateRequest
     ) {
         return journeyService.modifyLodgmentJourney(journeyId, updateRequest);
     }
@@ -60,7 +61,7 @@ public class JourneyController {
     @PutMapping("/visit/{journeyId}")
     public VisitJourneyUpdateResponse updateVisitJourney(
             @PathVariable Long journeyId,
-            @RequestBody VisitJourneyUpdateRequest updateRequest
+            @RequestBody @Valid VisitJourneyUpdateRequest updateRequest
     ) {
         return journeyService.modifyVisitJourney(journeyId, updateRequest);
     }
