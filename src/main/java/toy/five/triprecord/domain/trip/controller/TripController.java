@@ -1,6 +1,5 @@
 package toy.five.triprecord.domain.trip.controller;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -8,9 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
+import toy.five.triprecord.domain.trip.dto.response.TripDetailResponse;
 import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
 import toy.five.triprecord.domain.trip.dto.request.TripPatchRequest;
 import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
@@ -20,7 +20,6 @@ import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 import toy.five.triprecord.domain.trip.entity.Domestic;
 import toy.five.triprecord.domain.trip.service.TripService;
 import toy.five.triprecord.global.exception.ApiResponse;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,22 +33,18 @@ public class TripController {
     private final TripService tripService;
 
     @GetMapping("/{tripId}")
-    public TripEntryResponse getTrip(@PathVariable final Long tripId) {
-        log.info("GET /trips/{tripId} HTTP/1.1");
+    public TripDetailResponse getTrip(@PathVariable final Long tripId) {
 
         return tripService.getTripById(tripId);
     }
 
     @GetMapping("/all")
-    public List<TripEntryResponse> getAllTrips(
+    public List<TripDetailResponse> getAllTrips(
             @PageableDefault(size=5, sort = "startTime", direction = Sort.Direction.ASC)
             Pageable pageable
     ) {
-        log.info("GET /trips/allPaging HTTP/1.1");
-
         return tripService.getAllTripsPaging(pageable);
     }
-
 
     @PostMapping
     public ResponseEntity<ApiResponse> createTrip(@Valid @RequestBody TripCreateRequest tripCreateRequest) {
@@ -71,10 +66,7 @@ public class TripController {
         return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(savedTrip).build());
     }
 
-
-
-
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         tripService.createTrip(
                 TripCreateRequest.builder()

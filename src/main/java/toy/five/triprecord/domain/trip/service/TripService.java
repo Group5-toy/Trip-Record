@@ -5,7 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
+import toy.five.triprecord.domain.jouney.dto.response.JourneyDetailResponse;
+import toy.five.triprecord.domain.trip.dto.response.TripDetailResponse;
 import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
 import toy.five.triprecord.domain.trip.dto.request.TripPatchRequest;
 import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
@@ -18,6 +19,8 @@ import toy.five.triprecord.domain.trip.validation.patch.TripPatchTimeValidatorUt
 import toy.five.triprecord.global.exception.BaseException;
 import toy.five.triprecord.global.exception.ErrorCode;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static toy.five.triprecord.global.exception.ErrorCode.TRIP_NO_EXIST;
@@ -32,15 +35,36 @@ public class TripService {
 
 
     @Transactional(readOnly = true)
-    public TripEntryResponse getTripById(Long tripId) {
+    public TripDetailResponse getTripById(Long tripId) {
 
-        return TripEntryResponse.fromEntity(findTripById(tripId));
+        Trip findTrip = findTripById(tripId);
+        List<JourneyDetailResponse> journeyResponses = getJourneysFromTripBySorted(findTrip);
+
+        return TripDetailResponse.fromEntity(findTrip, journeyResponses);
     }
 
     @Transactional(readOnly = true)
-    public List<TripEntryResponse> getAllTripsPaging(Pageable pageable) {
-        return tripRepository.findAll(pageable)
-                .map(TripEntryResponse::fromEntity).getContent();
+    public List<TripDetailResponse> getAllTripsPaging(Pageable pageable) {
+        return tripRepository.findAll(pageable).stream()
+                .map(
+                        trip -> TripDetailResponse.fromEntity(trip, getJourneysFromTripBySorted(trip))
+                )
+                .toList();
+    }
+
+    private List<JourneyDetailResponse> getJourneysFromTripBySorted(Trip findTrip) {
+        List<JourneyDetailResponse> journeyResponses = new ArrayList<>();
+
+        findTrip.getMoveJourneys().stream()
+                .map(JourneyDetailResponse::fromEntity).forEach(journeyResponses::add);
+        findTrip.getLodgmentJourneys().stream()
+                .map(JourneyDetailResponse::fromEntity).forEach(journeyResponses::add);
+        findTrip.getVisitJourneys().stream()
+                .map(JourneyDetailResponse::fromEntity).forEach(journeyResponses::add);
+
+        journeyResponses.sort(Comparator.comparing(JourneyDetailResponse::getStartTime));
+
+        return journeyResponses;
     }
 
     private Trip findTripById(Long id) {

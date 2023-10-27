@@ -3,24 +3,16 @@ package toy.five.triprecord.domain.jouney.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toy.five.triprecord.domain.jouney.dto.*;
 import toy.five.triprecord.domain.jouney.dto.request.JourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.VisitJourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.response.JourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.*;
 import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.VisitJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
 import toy.five.triprecord.domain.jouney.entity.MoveJourney;
 import toy.five.triprecord.domain.jouney.entity.VisitJourney;
@@ -31,13 +23,11 @@ import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
 import toy.five.triprecord.global.exception.BaseException;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static toy.five.triprecord.global.exception.ErrorCode.JOURNEY_NO_EXIST;
 import static toy.five.triprecord.global.exception.ErrorCode.TRIP_NO_EXIST;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -63,7 +53,6 @@ public class JourneyService {
     @Transactional(readOnly = true)
     public List<JourneyDetailResponse> getAllJourneysByTripId(Long tripId) {
 
-        log.info("TAG : getAllJourneysByTripId");
         List<JourneyDetailResponse> journeyResponses = new ArrayList<>();
 
         moveJourneyRepository.findAllByTripId(tripId).stream()
@@ -161,7 +150,6 @@ public class JourneyService {
             VisitJourneyUpdateRequest updateRequest
     ){
 
-        log.info("Called : JousrenyService.modifyVisitJourney");
         VisitJourney findJourney = visitJourneyRepository.findById(journeyId)
                 .orElseThrow(() -> new BaseException(JOURNEY_NO_EXIST));
 
