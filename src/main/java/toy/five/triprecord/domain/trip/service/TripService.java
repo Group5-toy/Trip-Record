@@ -6,6 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toy.five.triprecord.domain.trip.dto.TripEntryResponse;
+import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
+import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
+import toy.five.triprecord.domain.trip.dto.response.TripCreateResponse;
+import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
 import toy.five.triprecord.global.exception.BaseException;
@@ -14,13 +18,9 @@ import java.util.List;
 
 import static toy.five.triprecord.global.exception.ErrorCode.TRIP_NO_EXIST;
 
-import toy.five.triprecord.domain.trip.dto.request.TripCreateRequest;
-import toy.five.triprecord.domain.trip.dto.request.TripUpdateRequest;
-import toy.five.triprecord.domain.trip.dto.response.TripCreateResponse;
-import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
-
 @Service
 @RequiredArgsConstructor
+
 @Slf4j
 public class TripService {
 
@@ -33,7 +33,7 @@ public class TripService {
     }
 
     @Transactional(readOnly = true)
-    public List<TripEntryResponse> getAllTrips(Pageable pageable) {
+    public List<TripEntryResponse> getAllTripsPaging(Pageable pageable) {
         return tripRepository.findAll(pageable)    //Nullable 발생 시 처리 예정
                 .map(TripEntryResponse::fromEntity).getContent();
     }

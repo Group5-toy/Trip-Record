@@ -35,13 +35,12 @@ public class TripController {
 
     @GetMapping("/all")
     public List<TripEntryResponse> getAllTrips(
-            @PageableDefault(size=5, sort = "id", direction = Sort.Direction.ASC)
+            @PageableDefault(size=5, sort = "startTime", direction = Sort.Direction.ASC)
             Pageable pageable
     ) {
         log.info("GET /trips/allPaging HTTP/1.1");
 
-
-        return tripService.getAllTrips(pageable);
+        return tripService.getAllTripsPaging(pageable);
     }
 
     /**
