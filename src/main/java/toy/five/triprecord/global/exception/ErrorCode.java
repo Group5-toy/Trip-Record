@@ -13,6 +13,7 @@ public enum ErrorCode {
     TRIP_INVALID_PARAMETER(400,"입력하신 여행의 정보가 전부 입력되지 않았습니다."),
     TRIP_IVALID_UPDATE(400,"업데이트하고자 하는 여행의 정보가 한 개는 필요합니다."),
     TRIP_SERVER_ERROR(400,"서버에 문제가 생겨 잠시 후 다시 시도해주세요"),
+    TRIP_BOOLEAN_ERROR(400,"정확한 타입으로 입력해주세요."),
     TRIP_TEST(300,"테스트"),
 
     ;

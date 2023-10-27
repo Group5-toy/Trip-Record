@@ -17,7 +17,6 @@ import toy.five.triprecord.global.util.BaseTimeRequest;
 @NoArgsConstructor
 @SuperBuilder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-//@TripCreateTimeConstraint
 @CommonTimeConstraint
 public class TripCreateRequest extends BaseTimeRequest {
 

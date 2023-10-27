@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,8 +31,6 @@ public class GlobalExceptionHandler {
 
         BaseException baseException;
 
-        logger.info("Error Message: {}", errorMessage); // 여기서 로깅을 합니다.
-
         if (errorMessage != null) {
             if (TRIP_PARAMETER_ERROR.getMessage().equals(errorMessage)) {
                 baseException = new BaseException(ErrorCode.TRIP_IVALID_UPDATE);
@@ -53,6 +52,18 @@ public class GlobalExceptionHandler {
                 HttpStatus.valueOf(baseException.getStatusCode())
         );
     }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiResponse<String>> handleClassCastException(HttpMessageNotReadableException e) {
+        BaseException baseException = new BaseException(ErrorCode.TRIP_BOOLEAN_ERROR);
+
+        return new ResponseEntity<>(
+                ApiResponse.fail(baseException.getStatusCode(), baseException.getMessage()),
+                HttpStatus.valueOf(baseException.getStatusCode())
+        );
+    }
+
+
 
 
 }
