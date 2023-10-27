@@ -1,5 +1,6 @@
 package toy.five.triprecord.domain.trip.controller;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ import toy.five.triprecord.domain.trip.dto.response.TripUpdateResponse;
 import toy.five.triprecord.domain.trip.service.TripService;
 import toy.five.triprecord.global.exception.ApiResponse;
 import org.springframework.http.HttpStatus;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -80,7 +83,7 @@ public class TripController {
 
 
 
-/**
+
     @PostConstruct
     public void init() {
         tripService.createTrip(
@@ -101,5 +104,5 @@ public class TripController {
                         .build()
         );
     }
-    **/
+
 }

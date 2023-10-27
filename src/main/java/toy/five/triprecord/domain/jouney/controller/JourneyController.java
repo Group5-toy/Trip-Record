@@ -77,7 +77,7 @@ public class JourneyController {
 
 
 
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         MoveJourneyCreateRequest move =
                 MoveJourneyCreateRequest.builder()
