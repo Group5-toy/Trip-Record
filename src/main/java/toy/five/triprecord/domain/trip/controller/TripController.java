@@ -4,8 +4,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -41,9 +39,14 @@ public class TripController {
     }
 
     @GetMapping("/all")
-    public List<TripEntryResponse> getAllTrips() {
-        log.info("GET /trips/all HTTP/1.1");
-        return tripService.getAllTrips();
+    public List<TripEntryResponse> getAllTrips(
+            @PageableDefault(size=5, sort = "id", direction = Sort.Direction.ASC)
+            Pageable pageable
+    ) {
+        log.info("GET /trips/allPaging HTTP/1.1");
+
+
+        return tripService.getAllTrips(pageable);
     }
 
     /**

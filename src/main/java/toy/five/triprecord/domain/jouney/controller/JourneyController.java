@@ -34,37 +34,37 @@ public class JourneyController {
     }
 
 
- /**
-    //@PostConstruct
-  @PutMapping("/move/{journeyId}")
-  public MoveJourneyUpdateResponse updateMoveJourney(
-  @PathVariable Long journeyId,
-  @RequestBody MoveJourneyUpdateRequest updateRequest
-  ) {
-  return journeyService.modifyMoveJourney(journeyId, updateRequest);
-  }
 
-  @PutMapping("/lodgment/{journeyId}")
-  public LodgmentJourneyUpdateResponse updateLodgmentJourney(
-  @PathVariable Long journeyId,
-  @RequestBody LodgmentJourneyUpdateRequest updateRequest
-  ) {
-  return journeyService.modifyLodgmentJourney(journeyId, updateRequest);
-  }
+    @PutMapping("/move/{journeyId}")
+    public MoveJourneyUpdateResponse updateMoveJourney(
+            @PathVariable Long journeyId,
+            @RequestBody MoveJourneyUpdateRequest updateRequest
+    ) {
+        return journeyService.modifyMoveJourney(journeyId, updateRequest);
+    }
 
-  @PutMapping("/visit/{journeyId}")
-  public VisitJourneyUpdateResponse updateVisitJourney(
-  @PathVariable Long journeyId,
-  @RequestBody VisitJourneyUpdateRequest updateRequest
-  ) {
-  return journeyService.modifyVisitJourney(journeyId, updateRequest);
-  }
+    @PutMapping("/lodgment/{journeyId}")
+    public LodgmentJourneyUpdateResponse updateLodgmentJourney(
+            @PathVariable Long journeyId,
+            @RequestBody LodgmentJourneyUpdateRequest updateRequest
+    ) {
+        return journeyService.modifyLodgmentJourney(journeyId, updateRequest);
+    }
 
+    @PutMapping("/visit/{journeyId}")
+    public VisitJourneyUpdateResponse updateVisitJourney(
+            @PathVariable Long journeyId,
+            @RequestBody VisitJourneyUpdateRequest updateRequest
+    ) {
+        return journeyService.modifyVisitJourney(journeyId, updateRequest);
+    }
 
 
-  public void init() {
-        MoveJourneyRequest move =
-                MoveJourneyRequest.builder()
+
+    @PostConstruct
+    public void init() {
+        MoveJourneyCreateRequest move =
+                MoveJourneyCreateRequest.builder()
                         .name("이동11")
                         .vehicle("대중 교통")
                         .startPoint("서울")
@@ -95,5 +95,5 @@ public class JourneyController {
         journeyService.saveJourneys(1L, journeyRequest);
 
     }
-**/
+
 }
