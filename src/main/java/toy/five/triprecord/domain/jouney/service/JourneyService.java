@@ -2,8 +2,13 @@ package toy.five.triprecord.domain.jouney.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toy.five.triprecord.domain.jouney.dto.JourneysDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.LodgmentJourneyDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.MoveJourneyDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.VisitJourneyDetailResponse;
 import toy.five.triprecord.domain.jouney.dto.journey_create.request.JourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.journey_create.request.LodgmentJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.journey_create.request.MoveJourneyCreateRequest;
@@ -28,6 +33,7 @@ import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +53,19 @@ public class JourneyService {
         this.moveJourneyRepository = moveJourneyRepository;
         this.visitJourneyRepository = visitJourneyRepository;
         this.lodgmentJourneyRepository = lodgmentJourneyRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public JourneysDetailResponse getAllJourneysByTripId(Long tripId) {
+        List<MoveJourneyDetailResponse> moveResponses = moveJourneyRepository.findAllByTripId(tripId)
+                .stream().map(MoveJourneyDetailResponse::fromEntity).toList();
+        List<LodgmentJourneyDetailResponse> lodgmentResponses = lodgmentJourneyRepository.findAllByTripId(tripId)
+                .stream().map(LodgmentJourneyDetailResponse::fromEntity).toList();
+        List<VisitJourneyDetailResponse> visitResponses = visitJourneyRepository.findAllByTripId(tripId)
+                .stream().map(VisitJourneyDetailResponse::fromEntity).toList();
+
+        return JourneysDetailResponse.of(moveResponses, visitResponses, lodgmentResponses);
+
     }
 
     private Trip findTripById(Long tripId) {

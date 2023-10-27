@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import toy.five.triprecord.domain.jouney.dto.JourneysDetailResponse;
 import toy.five.triprecord.domain.jouney.dto.journey_create.request.JourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.journey_create.request.LodgmentJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.journey_create.request.MoveJourneyCreateRequest;
@@ -29,6 +30,13 @@ public class JourneyController {
     @Autowired
     public JourneyController(JourneyService journeyService) {
         this.journeyService = journeyService;
+    }
+
+    @GetMapping
+    public JourneysDetailResponse getAllJourneysByTrip(@RequestParam Long tripId) {
+
+        return journeyService.getAllJourneysByTripId(tripId);
+
     }
 
     @PostMapping("/{tripId}")
