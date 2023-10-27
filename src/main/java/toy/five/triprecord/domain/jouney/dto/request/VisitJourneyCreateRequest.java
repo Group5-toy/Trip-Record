@@ -1,5 +1,7 @@
-package toy.five.triprecord.domain.jouney.dto.journey_update.request;
+package toy.five.triprecord.domain.jouney.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,20 +16,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class VisitJourneyUpdateRequest {
+public class VisitJourneyCreateRequest {
 
+    @NotNull
     private String name;
+    @NotNull
     private String location;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    @NotNull
     private JourneyType type;
+    @NotNull
+    private LocalDateTime startTime;
+    @NotNull
+    private LocalDateTime endTime;
 
-    public void updateCheck(VisitJourneyUpdateRequest request) {
-        if(request.getName() != null) {
-            this.name = request.getName();
-        }
-        if(request.getName() != null) {
-            this.location = request.getLocation();
-        }
-    }
 }

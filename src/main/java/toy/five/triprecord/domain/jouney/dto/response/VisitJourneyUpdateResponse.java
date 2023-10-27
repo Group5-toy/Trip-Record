@@ -1,10 +1,10 @@
-package toy.five.triprecord.domain.jouney.dto.journey_update.response;
+package toy.five.triprecord.domain.jouney.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import toy.five.triprecord.domain.jouney.entity.JourneyType;
-import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
+import toy.five.triprecord.domain.jouney.entity.VisitJourney;
 
 import java.time.LocalDateTime;
 
@@ -12,20 +12,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@NoArgsConstructor
 @Builder
-public class LodgmentJourneyUpdateResponse {
+public class VisitJourneyUpdateResponse {
 
     private Long tripId;
     private String name;
-    private String dormitoryName;
+    private String location;
     private JourneyType type;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public static LodgmentJourneyUpdateResponse fromEntity(LodgmentJourney entity) {
-        return LodgmentJourneyUpdateResponse.builder()
+    public static VisitJourneyUpdateResponse fromEntity(VisitJourney entity) {
+        return VisitJourneyUpdateResponse.builder()
                 .tripId(entity.getTrip().getId())
                 .name(entity.getName())
-                .dormitoryName(entity.getDormitoryName())
+                .location(entity.getLocation())
                 .type(entity.getType())
                 .startTime(entity.getStartTime())
                 .endTime(entity.getEndTime())

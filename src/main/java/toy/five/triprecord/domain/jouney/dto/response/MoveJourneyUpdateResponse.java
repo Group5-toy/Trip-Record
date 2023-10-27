@@ -1,11 +1,10 @@
-package toy.five.triprecord.domain.jouney.dto.journey_create.response;
+package toy.five.triprecord.domain.jouney.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import toy.five.triprecord.domain.jouney.entity.JourneyType;
 import toy.five.triprecord.domain.jouney.entity.MoveJourney;
-import toy.five.triprecord.domain.trip.entity.Trip;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@NoArgsConstructor
 @Builder
-public class MoveJourneyCreateResponse {
+public class MoveJourneyUpdateResponse {
 
     private Long tripId;
     private String name;
@@ -25,8 +24,8 @@ public class MoveJourneyCreateResponse {
     private LocalDateTime endTime;
 
 
-    public static MoveJourneyCreateResponse fromEntity(MoveJourney entity) {
-        return MoveJourneyCreateResponse.builder()
+    public static MoveJourneyUpdateResponse fromEntity(MoveJourney entity) {
+        return MoveJourneyUpdateResponse.builder()
                 .tripId(entity.getTrip().getId())
                 .name(entity.getName())
                 .vehicle(entity.getVehicle())

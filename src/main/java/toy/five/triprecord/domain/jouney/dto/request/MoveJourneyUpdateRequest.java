@@ -1,5 +1,6 @@
-package toy.five.triprecord.domain.jouney.dto.journey_create.request;
+package toy.five.triprecord.domain.jouney.dto.request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,17 +9,25 @@ import toy.five.triprecord.domain.jouney.entity.JourneyType;
 import toy.five.triprecord.domain.jouney.entity.MoveJourney;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MoveJourneyCreateRequest {
+public class MoveJourneyUpdateRequest {
 
+    @NotNull
     private String name;
+    @NotNull
     private String vehicle;
+    @NotNull
     private String startPoint;
+    @NotNull
     private String endPoint;
-    private JourneyType type;
-
+    @NotNull
+    private LocalDateTime startTime;
+    @NotNull
+    private LocalDateTime endTime;
 
 }

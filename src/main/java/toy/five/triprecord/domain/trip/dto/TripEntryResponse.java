@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import toy.five.triprecord.domain.jouney.dto.journey_create.response.LodgmentJourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_create.response.MoveJourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_create.response.VisitJourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyCreateResponse;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
 import java.time.LocalDateTime;
