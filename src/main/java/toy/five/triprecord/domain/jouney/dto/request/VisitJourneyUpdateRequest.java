@@ -1,5 +1,8 @@
-package toy.five.triprecord.domain.jouney.dto.journey_update.request;
+package toy.five.triprecord.domain.jouney.dto.request;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,20 +16,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class VisitJourneyUpdateRequest {
 
+    @NotNull
     private String name;
+    @NotNull
     private String location;
+    @NotNull
     private LocalDateTime startTime;
+    @NotNull
     private LocalDateTime endTime;
-    private JourneyType type;
 
-    public void updateCheck(VisitJourneyUpdateRequest request) {
-        if(request.getName() != null) {
-            this.name = request.getName();
-        }
-        if(request.getName() != null) {
-            this.location = request.getLocation();
-        }
-    }
 }

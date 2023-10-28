@@ -1,5 +1,8 @@
-package toy.five.triprecord.domain.jouney.dto;
+package toy.five.triprecord.domain.jouney.dto.response;
 
+
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +15,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@NoArgsConstructor
 @Builder
-public class MoveJourneyDetailResponse {
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class MoveJourneyUpdateResponse {
 
     private Long tripId;
     private String name;
@@ -24,8 +28,8 @@ public class MoveJourneyDetailResponse {
     private LocalDateTime endTime;
 
 
-    public static MoveJourneyDetailResponse fromEntity(MoveJourney entity) {
-        return MoveJourneyDetailResponse.builder()
+    public static MoveJourneyUpdateResponse fromEntity(MoveJourney entity) {
+        return MoveJourneyUpdateResponse.builder()
                 .tripId(entity.getTrip().getId())
                 .name(entity.getName())
                 .vehicle(entity.getVehicle())

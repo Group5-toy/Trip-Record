@@ -1,9 +1,10 @@
 package toy.five.triprecord.domain.jouney.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-import toy.five.triprecord.domain.jouney.dto.journey_update.request.LodgmentJourneyUpdateRequest;
+import lombok.experimental.SuperBuilder;
+import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyUpdateRequest;
 import toy.five.triprecord.domain.trip.entity.Trip;
 
 
@@ -11,7 +12,7 @@ import toy.five.triprecord.domain.trip.entity.Trip;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Entity
 public class LodgmentJourney extends BaseJourney {
 
@@ -32,6 +33,7 @@ public class LodgmentJourney extends BaseJourney {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private JourneyType type;
+
 
     public void updateEntity(LodgmentJourneyUpdateRequest request) {
         this.name = request.getName();

@@ -1,10 +1,12 @@
-package toy.five.triprecord.domain.jouney.dto;
+package toy.five.triprecord.domain.jouney.dto.response;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import toy.five.triprecord.domain.jouney.entity.JourneyType;
-import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
+import toy.five.triprecord.domain.jouney.entity.VisitJourney;
 
 import java.time.LocalDateTime;
 
@@ -12,20 +14,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 //@NoArgsConstructor
 @Builder
-public class LodgmentJourneyDetailResponse {
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class VisitJourneyUpdateResponse {
 
     private Long tripId;
     private String name;
-    private String dormitoryName;
+    private String location;
     private JourneyType type;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public static LodgmentJourneyDetailResponse fromEntity(LodgmentJourney entity) {
-        return LodgmentJourneyDetailResponse.builder()
+    public static VisitJourneyUpdateResponse fromEntity(VisitJourney entity) {
+        return VisitJourneyUpdateResponse.builder()
                 .tripId(entity.getTrip().getId())
                 .name(entity.getName())
-                .dormitoryName(entity.getDormitoryName())
+                .location(entity.getLocation())
                 .type(entity.getType())
                 .startTime(entity.getStartTime())
                 .endTime(entity.getEndTime())

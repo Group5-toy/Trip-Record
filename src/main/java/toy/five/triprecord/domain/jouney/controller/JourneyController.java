@@ -1,27 +1,26 @@
 package toy.five.triprecord.domain.jouney.controller;
 
-import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import toy.five.triprecord.domain.jouney.dto.JourneysDetailResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_create.request.JourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_create.request.LodgmentJourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_create.request.MoveJourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_create.request.VisitJourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_create.response.JourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_update.request.LodgmentJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_update.request.MoveJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_update.request.VisitJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.journey_update.response.LodgmentJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_update.response.MoveJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.journey_update.response.VisitJourneyUpdateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.JourneyDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.request.*;
+import toy.five.triprecord.domain.jouney.dto.response.JourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyUpdateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyUpdateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.service.JourneyService;
+
+import java.time.LocalDateTime;
 import java.util.List;
+
 import static toy.five.triprecord.domain.jouney.entity.JourneyType.*;
 
+@Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/journey")
+@RequestMapping("/journeys")
 @RestController
 public class JourneyController {
 
@@ -33,7 +32,7 @@ public class JourneyController {
     }
 
     @GetMapping
-    public JourneysDetailResponse getAllJourneysByTrip(@RequestParam Long tripId) {
+    public List<JourneyDetailResponse> getAllJourneysFromTrip(@RequestParam Long tripId) {
 
         return journeyService.getAllJourneysByTripId(tripId);
 
@@ -42,7 +41,7 @@ public class JourneyController {
     @PostMapping("/{tripId}")
     public JourneyCreateResponse createJourney(
             @PathVariable Long tripId,
-            @RequestBody JourneyCreateRequest request
+            @RequestBody @Valid JourneyCreateRequest request
     ) {
         return journeyService.saveJourneys(tripId, request);
     }
@@ -50,7 +49,7 @@ public class JourneyController {
     @PutMapping("/move/{journeyId}")
     public MoveJourneyUpdateResponse updateMoveJourney(
             @PathVariable Long journeyId,
-            @RequestBody MoveJourneyUpdateRequest updateRequest
+            @RequestBody @Valid MoveJourneyUpdateRequest updateRequest
     ) {
         return journeyService.modifyMoveJourney(journeyId, updateRequest);
     }
@@ -58,7 +57,7 @@ public class JourneyController {
     @PutMapping("/lodgment/{journeyId}")
     public LodgmentJourneyUpdateResponse updateLodgmentJourney(
             @PathVariable Long journeyId,
-            @RequestBody LodgmentJourneyUpdateRequest updateRequest
+            @RequestBody @Valid LodgmentJourneyUpdateRequest updateRequest
     ) {
         return journeyService.modifyLodgmentJourney(journeyId, updateRequest);
     }
@@ -66,14 +65,15 @@ public class JourneyController {
     @PutMapping("/visit/{journeyId}")
     public VisitJourneyUpdateResponse updateVisitJourney(
             @PathVariable Long journeyId,
-            @RequestBody VisitJourneyUpdateRequest updateRequest
+            @RequestBody @Valid VisitJourneyUpdateRequest updateRequest
     ) {
+
         return journeyService.modifyVisitJourney(journeyId, updateRequest);
     }
 
 
 
-    //@PostConstruct
+//    @PostConstruct
     public void init() {
         MoveJourneyCreateRequest move =
                 MoveJourneyCreateRequest.builder()
@@ -82,6 +82,7 @@ public class JourneyController {
                         .startPoint("서울")
                         .endPoint("대전")
                         .type(MOVE)
+                        .startTime(LocalDateTime.now())
                         .build();
 
         LodgmentJourneyCreateRequest lodgment =
@@ -89,6 +90,7 @@ public class JourneyController {
                         .name("숙박11")
                         .dormitoryName("야놀자호텔")
                         .type(LODGMENT)
+                        .startTime(LocalDateTime.now())
                         .build();
 
         VisitJourneyCreateRequest visit =
@@ -96,6 +98,7 @@ public class JourneyController {
                         .name("체류11")
                         .location("관악구")
                         .type(VISIT)
+                        .startTime(LocalDateTime.of(2022, 10,10,10,10))
                         .build();
 
         JourneyCreateRequest journeyRequest = JourneyCreateRequest.builder()
@@ -104,7 +107,7 @@ public class JourneyController {
                 .visits(List.of(visit))
                 .build();
 
-        journeyService.saveJourneys(1L, journeyRequest);
+        journeyService.saveJourneys(2L, journeyRequest);
 
     }
 
