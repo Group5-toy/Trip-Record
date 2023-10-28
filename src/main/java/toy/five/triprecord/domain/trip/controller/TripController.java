@@ -35,6 +35,9 @@ public class TripController {
     @GetMapping("/{tripId}")
     public ResponseEntity<ApiResponse> getTrip(@PathVariable final Long tripId) {
 
+        log.info("TAG={}", HttpStatus.OK);
+        log.info("TAG={}", HttpStatus.OK.name());
+
         return ResponseEntity.ok(
                 ApiResponse.builder()
                         .status("Success")
@@ -77,26 +80,4 @@ public class TripController {
         TripPatchResponse savedTrip = tripService.patchTrip(tripId,tripPatchRequest);
         return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(savedTrip).build());
     }
-
-//    @PostConstruct
-    public void init() {
-        tripService.createTrip(
-                TripCreateRequest.builder()
-                        .name("여행1")
-                        .startTime(LocalDateTime.now())
-                        .endTime(LocalDateTime.now())
-                        .domestic(Domestic.ABROAD)
-                        .build()
-        );
-
-        tripService.createTrip(
-                TripCreateRequest.builder()
-                        .name("여행2")
-                        .startTime(LocalDateTime.now())
-                        .endTime(LocalDateTime.now())
-                        .domestic(Domestic.DOMESTIC)
-                        .build()
-        );
-    }
-
 }
