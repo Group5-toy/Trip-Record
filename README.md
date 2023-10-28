@@ -43,7 +43,7 @@
 
 그래서 모두 같은 환경을 공유할 수 있는 MySQL 도커 컨테이너를 만들어 운영하기로 결정했습니다.
 
-<img width="179" alt="스크린샷 2023-10-28 151421" src="https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/97028441/9000bc13-1ba4-4721-8a3d-c96ad11004d9">
+<img width="179" alt="스크린샷 2023-10-28 151421" src="https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/97028441/6e236e2f-870f-448e-aee5-42190a926fba">
 
 그래서 위의 그림과 같은 관계를 가지고 동작합니다.
 
