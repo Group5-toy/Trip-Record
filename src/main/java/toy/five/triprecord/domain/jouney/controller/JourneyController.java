@@ -71,44 +71,4 @@ public class JourneyController {
         return journeyService.modifyVisitJourney(journeyId, updateRequest);
     }
 
-
-
-//    @PostConstruct
-    public void init() {
-        MoveJourneyCreateRequest move =
-                MoveJourneyCreateRequest.builder()
-                        .name("이동11")
-                        .vehicle("대중 교통")
-                        .startPoint("서울")
-                        .endPoint("대전")
-                        .type(MOVE)
-                        .startTime(LocalDateTime.now())
-                        .build();
-
-        LodgmentJourneyCreateRequest lodgment =
-                LodgmentJourneyCreateRequest.builder()
-                        .name("숙박11")
-                        .dormitoryName("야놀자호텔")
-                        .type(LODGMENT)
-                        .startTime(LocalDateTime.now())
-                        .build();
-
-        VisitJourneyCreateRequest visit =
-                VisitJourneyCreateRequest.builder()
-                        .name("체류11")
-                        .location("관악구")
-                        .type(VISIT)
-                        .startTime(LocalDateTime.of(2022, 10,10,10,10))
-                        .build();
-
-        JourneyCreateRequest journeyRequest = JourneyCreateRequest.builder()
-                .moves(List.of(move))
-                .lodgments(List.of(lodgment))
-                .visits(List.of(visit))
-                .build();
-
-        journeyService.saveJourneys(2L, journeyRequest);
-
-    }
-
 }
