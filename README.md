@@ -35,6 +35,56 @@
 |PUT|/journeys/visit/{id}|name: String<br>location: String<br>start_time: LOCALDATE<br>end_time: LOCALDATE|{<br>status : Success,<br>code : xx,<br>data : visitJourneyUpdateResponse<br>}|방문여정의 내용을 수정한다.|
 |PUT|/journeys/lodgment/{id}|name: String<br>domitory_name: String<br>start_time: LOCALDATE<br>end_time: LOCALDATE|{<br>status : Success,<br>code : xx,<br>data : lodgmentJourneyUpdateResponse<br>}|숙박여정의 내용을 수정한다.|
 
+
+## 📦 Docker 실행방법 (MySQL Server Container)
+### 개요
+
+협업 개발을 하는데 있어 SpringBoot 프로젝트까지는 버전을 공유하는 것이 쉽게 가능하나, MySQL과 같은 외부 애플리케이션의 버전을 맞추고 후에 배포까지 고려하는 것은 매우 힘들다고 판단했습니다.
+
+그래서 모두 같은 환경을 공유할 수 있는 MySQL 도커 컨테이너를 만들어 운영하기로 결정했습니다.
+
+<img width="179" alt="스크린샷 2023-10-28 151421" src="https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/97028441/9000bc13-1ba4-4721-8a3d-c96ad11004d9">
+
+그래서 위의 그림과 같은 관계를 가지고 동작합니다.
+
+1. SpringBoot 에서 3305Port로 DB관련 요청을 보냅니다.
+2. Docker Engine이  3305Port 요청을 받습니다.
+3. 설정에 딸라 Docker Engine이 3305Port 요청을 MySQL의 포트인 3306Port로 전달해줌으로서 동작하게 됩니다.
+
+
+### 동작법
+
+#### Docker 설치
+
+도커를 실행시키기 위해서는 실행환경에 Docker가 설치되어있어야합니다.
+
+Window의 경우 **WSL**이라는 Windows 운영체제에서 경량화된 가상화 기술을 사용하여 Linux 운영 체제를 구동할 수 있도록 해 주는 프로그램을 까신 후, DockerDesktop을 설치하면 됩니다.
+
+아래 잘 정리된 설치 관련 블로그 글입니다.
+
+WSL 설치
+
+[WSL2 사용 설정(윈도우에서 Ubuntu 사용하는 방법)](https://axce.tistory.com/110?category=1030982)
+
+Docker Desktop 설치
+
+[[Docker] 윈도우 도커 설치방법(window 11)](https://axce.tistory.com/121)
+
+
+#### 실행
+
+Docker 설치를 마치셨으면 이제 Docker Conmtainer을 실행시킬 수 있습니다.
+
+![스크린샷 2023-10-28 151421.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/090b1c92-03e6-4ae9-8e00-eb34672bf01c/4071fdb9-0f58-487b-93a3-7797b8e7b2f7/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-10-28_151421.png)
+
+docker-compose.yml 파일에서 빨간상자로 표시된 실행버튼을 클릭하시면 자동으로 MySQL 컨테이너를 생성하여 동작시킵니다.
+
+그렇게 되면 3305 포트로 연결되는 MySQL 서버가 동작하여 SpringBoot와 연결되어 동작하게 됩니다.
+
+#### 추가정리페이지
+https://www.notion.so/geonmoo/Docker-71a7fdefc73042e9b91e525a08adb364
+
+
 ## 💡 실행결과 (Postman)
 ### 1. 여행 전체 조회
 * **요청**
