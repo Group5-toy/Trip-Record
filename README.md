@@ -44,7 +44,7 @@
 
 그래서 모두 같은 환경을 공유할 수 있는 MySQL 도커 컨테이너를 만들어 운영하기로 결정했습니다.
 
-<img width="179" alt="스크린샷 2023-10-28 151421" src="https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/97028441/6e236e2f-870f-448e-aee5-42190a926fba">
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F80jU5%2FbtszlYmANBH%2FHlxvlW1kZxYr2DcEnf6MKk%2Fimg.png)
 
 그래서 위의 그림과 같은 관계를 가지고 동작합니다.
 
@@ -77,7 +77,7 @@ Docker Desktop 설치
 Docker 설치를 마치셨으면 이제 Docker Conmtainer을 실행시킬 수 있습니다.
 
 
-<img width="179" alt="스크린샷 2023-10-28 151421" src="https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/97028441/d13bdb69-1be9-40a0-9d6b-0d1eab1d579b">
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F80jU5%2FbtszlYmANBH%2FHlxvlW1kZxYr2DcEnf6MKk%2Fimg.png)
 
 
 docker-compose.yml 파일에서 빨간상자로 표시된 실행버튼을 클릭하시면 자동으로 MySQL 컨테이너를 생성하여 동작시킵니다.
@@ -91,54 +91,61 @@ https://www.notion.so/geonmoo/Docker-71a7fdefc73042e9b91e525a08adb364
 ## 💡 실행결과 (Postman)
 ### 1. 여행 전체 조회
 * **요청**
-<br>![GET all Trip Request](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/2273f0c4-83dc-4a3c-83bb-64409a3aa9ff)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fm8Ski%2FbtszjugafGi%2FCvYNEkTauXRmkDbTFSESO1%2Fimg.png)
 * **응답**
-<br>![GET all Trip Response 01 png](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/9a7abdde-1f68-4f76-955e-2567f4c4270c)
-<br>![GET all Trip Response 02 png png](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/121ab98b-1042-4191-8947-39189b5f1783)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNjOP1%2FbtszjzuRy0K%2FIBuqwyZgOx5sK3RsZHPee0%2Fimg.png)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FTEAHH%2FbtsziQju6Tp%2F5n5k1LgVuELhdVuaItKN7k%2Fimg.png)
 
 ### 2. 여행 단건 조회
+### 2-1. Pathvariable
 * **요청**
-<br>![GET Trip Request](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/6f18da69-98c8-43e5-a470-06042f6182d3)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdcFJfc%2FbtsznAltvWa%2FTkIpJG4DY1MBWu8QuJCyPK%2Fimg.png)
 * **응답**
-<br>![GET Trip Response](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/0b712cc0-07cc-46a0-a095-2995922463f2)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbLoov1%2FbtszlvEW8dZ%2FPbuV7HFtvldB9xsnfsSvlk%2Fimg.png)
+### 2-2. QueryParam
+* **요청**
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FRdwUg%2FbtszmAzalCB%2Fpj4cZShknL3eeajeoYnde0%2Fimg.png)
+* **응답**
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FlzCJt%2Fbtszlj5KKft%2F5KgvBjhDefeKw3XRWKyjA0%2Fimg.png)
+
 
 ### 3. 여행 등록
 * **요청**
-<br>![POST Trip Request](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/34cf1c24-85c4-49fb-9df8-a0c858569e10)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbVswVr%2FbtszjFV8u5n%2F6lZI1L2cRUXSn42IwEKTNk%2Fimg.png)
 * **응답**
-<br>![POST Trip Response](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/1431a9e4-117b-46a8-a6da-f7f8d192c409)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbWt52p%2Fbtszj33IwMb%2FPyFB4OOY5kp8vko7VtbDN1%2Fimg.png)
 
 ### 4. 여행 정보 일부 수정
 * **요청**
-<br>![PATCH Trip Request](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/1add29f8-5f9d-41b6-a47c-b5ab82a6cd62)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbl21JV%2FbtszhunlRnB%2FGSE27lixfOQ9Sji8kLJKM0%2Fimg.png)
 * **응답**
-<br>![PATCH Trip Response](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/cec007d0-b4f9-4ef4-92bc-aa4bc3b2e412)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F09Mc2%2FbtszlHZBRDo%2FHkGplxldXpzPJYPYyuug7K%2Fimg.png)
 
 ### 5. 여행 정보 전체 수정
 * **요청**
-<br>![PUT Trip Request](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/8955707c-bcf3-43b1-b296-fc60729beea5)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdlQYLd%2Fbtszk3aSEba%2FmE9u3IPc2exUzoalINBeR0%2Fimg.png)
 * **응답**
-<br>![PUT Trip Response](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/eb93a4ad-55a1-479d-9eda-866fd0b167af)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F1VUrj%2FbtszkyCdtMN%2FjqNIrIiq9KkCKak6oDGXn1%2Fimg.png)
 
 ### 6. 여정 등록
 * **요청**
-<br>![POST Journey Request](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/6198243d-ad5a-4bbc-9894-4a758f9a476f)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbxhb9C%2Fbtszln8aA9j%2FgYEjoaqkzUYCy0qgBRniI0%2Fimg.png)
 * **응답**
-<br>![POST Journey Response](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/f990c558-a9fa-4a34-b8c9-52acf4e910b1)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FMlcLc%2FbtsziQw4dfe%2FSR29K5JPx8ZzViZIYQ3jVk%2Fimg.png)
 
 ### 7. 여정 정보 수정
-### 7-1. 이동정보
+### 7-1. 숙박정보
 * **요청**
-<br>![PUT MoveJourney Request](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/76535a9d-7654-42f1-aa11-12b1a6c794eb)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FszjHW%2FbtszoikHMBb%2FOmlUhxbBw5WgkQMlmO1ke0%2Fimg.png)
 * **응답**
-<br>![PUT MoveJourney Response](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/1f075665-ed1e-4ce2-911c-c48dc101a891)
-### 7-2. 숙박정보
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F0s7Td%2FbtszlIEdAht%2FFmTPlJK0IGyPQZnvpBVFk1%2Fimg.png)
+### 7-2. 이동정보
 * **요청**
-<br>![PUT LodgmentJourney Request](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/32866547-6e13-4af0-8724-0851d359a712)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcOUIGy%2Fbtszmy2ptC1%2FwdVoenBVqhlrPaYFaM3XCK%2Fimg.png)
 * **응답**
-<br>![PUT LodgmentJourney Response](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/85037782-482c-4ebc-93f9-7937565b5324)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Foy2ro%2FbtsznCKmt0m%2FLYWu63TKfHqTXMk0Ua0hH0%2Fimg.png)
 ### 7-3. 방문정보
 * **요청**
-<br>![PUT VisitJourney Request](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/a8e441fc-56ca-40a8-a086-b3bac63077c2)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FPh3Wl%2Fbtszj4nZ7cD%2FuYdjdgDRk9ekjKKUBkPwb0%2Fimg.png)
 * **응답**
-<br>![PUT VisitJourney Response](https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/81563920/679b3eca-64db-4e9b-9c70-78a124380e0f)
+<br>![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcuGZNK%2Fbtszl0Sgqgw%2F2uQTDYe9TdIGMcq29JP07k%2Fimg.png)
