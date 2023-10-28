@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
             } else if (TRIP_PARAMETER_ONE_ERROR.getMessage().equals(errorMessage)) {
                 baseException = new BaseException(ErrorCode.TRIP_INVALID_PARAMETER);
             } else {
-                baseException = new BaseException(ErrorCode.TRIP_SERVER_ERROR);
+                baseException = new BaseException(ErrorCode.TRIP_VALIDATE_ERROR);
             }
         } else {
             baseException = new BaseException(ErrorCode.TRIP_IVALID_UPDATE);
@@ -55,7 +55,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiResponse<String>> handleClassCastException(HttpMessageNotReadableException e) {
-        BaseException baseException = new BaseException(ErrorCode.TRIP_BOOLEAN_ERROR);
+        System.out.println("테스트");
+        BaseException baseException = new BaseException(ErrorCode.TRIP_ENUM_ERROR);
 
         return new ResponseEntity<>(
                 ApiResponse.fail(baseException.getStatusCode(), baseException.getMessage()),

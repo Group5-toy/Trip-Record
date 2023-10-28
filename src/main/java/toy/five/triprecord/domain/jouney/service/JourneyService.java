@@ -16,16 +16,10 @@ import toy.five.triprecord.domain.jouney.dto.request.JourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.VisitJourneyCreateRequest;
-import toy.five.triprecord.domain.jouney.dto.response.JourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyCreateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyCreateResponse;
+import toy.five.triprecord.domain.jouney.dto.response.*;
 import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyUpdateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.VisitJourneyUpdateRequest;
-import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyUpdateResponse;
-import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.entity.LodgmentJourney;
 import toy.five.triprecord.domain.jouney.entity.MoveJourney;
 import toy.five.triprecord.domain.jouney.entity.VisitJourney;
@@ -37,15 +31,11 @@ import toy.five.triprecord.domain.trip.repository.TripRepository;
 import toy.five.triprecord.global.exception.ApiResponse;
 import toy.five.triprecord.global.exception.BaseException;
 
-import javax.swing.text.html.Option;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static toy.five.triprecord.global.exception.ErrorCode.JOURNEY_NO_EXIST;
 import static toy.five.triprecord.global.exception.ErrorCode.TRIP_NO_EXIST;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -70,16 +60,24 @@ public class JourneyService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<ApiResponse> getAllJourneysByTripId(Long tripId) {
-        List<MoveJourneyDetailResponse> moveResponses = moveJourneyRepository.findAllByTripId(tripId)
-                .stream().map(MoveJourneyDetailResponse::fromEntity).toList();
-        List<LodgmentJourneyDetailResponse> lodgmentResponses = lodgmentJourneyRepository.findAllByTripId(tripId)
-                .stream().map(LodgmentJourneyDetailResponse::fromEntity).toList();
-        List<VisitJourneyDetailResponse> visitResponses = visitJourneyRepository.findAllByTripId(tripId)
-                .stream().map(VisitJourneyDetailResponse::fromEntity).toList();
 
-        JourneysDetailResponse journeysDetailResponse = JourneysDetailResponse.of(moveResponses, visitResponses, lodgmentResponses);
+        List<JourneyDetailResponse> journeyResponses = new ArrayList<>();
 
-        return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(journeysDetailResponse).build());
+        moveJourneyRepository.findAllByTripId(tripId).stream()
+                .map(JourneyDetailResponse::fromEntity).forEach(journeyResponses::add);
+        lodgmentJourneyRepository.findAllByTripId(tripId).stream()
+                .map(JourneyDetailResponse::fromEntity).forEach(journeyResponses::add);
+        visitJourneyRepository.findAllByTripId(tripId).stream()
+                .map(JourneyDetailResponse::fromEntity).forEach(journeyResponses::add);
+
+        journeyResponses.sort(Comparator.comparing(JourneyDetailResponse::getStartTime));
+
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .status("Success")
+                        .code(HttpStatus.OK.value())
+                        .data(journeyResponses)
+                        .build());
     }
 
     private Trip findTripById(Long tripId) {

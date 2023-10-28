@@ -30,6 +30,7 @@ public class LodgmentJourney extends BaseJourney {
     @Column(nullable = false, length = 100)
     private String dormitoryName;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private JourneyType type;
 
