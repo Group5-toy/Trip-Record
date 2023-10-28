@@ -30,6 +30,7 @@
 |PUT|/trips/{id}|name: String<br>start_time : LOCALDATE<br>end_time : LOCALDATE<br>domestic : ENUM|{<br>status : Success,<br>code : xx,<br>data : TripUpdateResponse<br>}|여행에 대한 이름, 시작 시간, 종료시간, 국내/외 여부를 전부 변경한다.|
 |GET|/trips/{id}|-|{<br>status : Success,<br>code : xx,<br>data : TripEntryResponse<br>}|단 건의 여행 이름과 그에 속한 여정들에 대한 정보들을 조회해온다.|
 |GET|/trips/all|-|{<br>status : Success,<br>code : xx,<br>data : data : List\<TripEntryResponse><br>}|다 건의 여행과 그에 속한 여정 이름들을 조회해온다.|
+|GET|/journeys?tripId={tripId}|-|{<br>status : Success,<br>code : xx,<br>data : data : List\<TripEntryResponse><br>}|tripId에 해당하는 다건의 여정에 대한 정보들을 조회해온다.|
 |POST|/trips/{tripId}/journeys|List\<MoveJourney> <br> List\<StayJourney> <br> List\<LiveJourney>|{<br>status : Success,<br>code : xx,<br>data : SuperJourneyResponse<br>}|특정 여행의 여정목록을 저장한다.|
 |PUT|/journeys/move/{id}|name: String<br>vehicle: String<br>start_point: String<br>end_point: String<br>start_time: LOCALDATE<br>end_time: LOCALDATE|{<br>status : Success,<br>code : xx,<br>data : moveJourneyUpdateResponse<br>}|이동여정의 내용을 수정한다.|
 |PUT|/journeys/visit/{id}|name: String<br>location: String<br>start_time: LOCALDATE<br>end_time: LOCALDATE|{<br>status : Success,<br>code : xx,<br>data : visitJourneyUpdateResponse<br>}|방문여정의 내용을 수정한다.|
