@@ -4,14 +4,15 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import toy.five.triprecord.domain.jouney.dto.response.JourneyDetailResponse;
 import toy.five.triprecord.domain.jouney.dto.request.*;
 import toy.five.triprecord.domain.jouney.dto.response.JourneyCreateResponse;
 import toy.five.triprecord.domain.jouney.dto.response.LodgmentJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.dto.response.MoveJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.dto.response.VisitJourneyUpdateResponse;
 import toy.five.triprecord.domain.jouney.service.JourneyService;
+import toy.five.triprecord.global.exception.ApiResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,14 +33,14 @@ public class JourneyController {
     }
 
     @GetMapping
-    public List<JourneyDetailResponse> getAllJourneysFromTrip(@RequestParam Long tripId) {
+    public ResponseEntity<ApiResponse> getAllJourneysByTrip(@RequestParam Long tripId) {
 
         return journeyService.getAllJourneysByTripId(tripId);
 
     }
 
     @PostMapping("/{tripId}")
-    public JourneyCreateResponse createJourney(
+    public ResponseEntity<ApiResponse> createJourney(
             @PathVariable Long tripId,
             @RequestBody @Valid JourneyCreateRequest request
     ) {
@@ -47,7 +48,7 @@ public class JourneyController {
     }
 
     @PutMapping("/move/{journeyId}")
-    public MoveJourneyUpdateResponse updateMoveJourney(
+    public ResponseEntity<ApiResponse> updateMoveJourney(
             @PathVariable Long journeyId,
             @RequestBody @Valid MoveJourneyUpdateRequest updateRequest
     ) {
@@ -55,7 +56,7 @@ public class JourneyController {
     }
 
     @PutMapping("/lodgment/{journeyId}")
-    public LodgmentJourneyUpdateResponse updateLodgmentJourney(
+    public ResponseEntity<ApiResponse> updateLodgmentJourney(
             @PathVariable Long journeyId,
             @RequestBody @Valid LodgmentJourneyUpdateRequest updateRequest
     ) {
@@ -63,7 +64,7 @@ public class JourneyController {
     }
 
     @PutMapping("/visit/{journeyId}")
-    public VisitJourneyUpdateResponse updateVisitJourney(
+    public ResponseEntity<ApiResponse> updateVisitJourney(
             @PathVariable Long journeyId,
             @RequestBody @Valid VisitJourneyUpdateRequest updateRequest
     ) {

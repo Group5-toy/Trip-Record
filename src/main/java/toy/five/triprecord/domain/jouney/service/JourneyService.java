@@ -3,8 +3,15 @@ package toy.five.triprecord.domain.jouney.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toy.five.triprecord.domain.jouney.dto.JourneysDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.LodgmentJourneyDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.MoveJourneyDetailResponse;
+import toy.five.triprecord.domain.jouney.dto.VisitJourneyDetailResponse;
 import toy.five.triprecord.domain.jouney.dto.request.JourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.LodgmentJourneyCreateRequest;
 import toy.five.triprecord.domain.jouney.dto.request.MoveJourneyCreateRequest;
@@ -21,6 +28,7 @@ import toy.five.triprecord.domain.jouney.repository.MoveJourneyRepository;
 import toy.five.triprecord.domain.jouney.repository.VisitJourneyRepository;
 import toy.five.triprecord.domain.trip.entity.Trip;
 import toy.five.triprecord.domain.trip.repository.TripRepository;
+import toy.five.triprecord.global.exception.ApiResponse;
 import toy.five.triprecord.global.exception.BaseException;
 
 import java.util.*;
@@ -51,7 +59,7 @@ public class JourneyService {
     }
 
     @Transactional(readOnly = true)
-    public List<JourneyDetailResponse> getAllJourneysByTripId(Long tripId) {
+    public ResponseEntity<ApiResponse> getAllJourneysByTripId(Long tripId) {
 
         List<JourneyDetailResponse> journeyResponses = new ArrayList<>();
 
@@ -64,7 +72,12 @@ public class JourneyService {
 
         journeyResponses.sort(Comparator.comparing(JourneyDetailResponse::getStartTime));
 
-        return journeyResponses;
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .status("Success")
+                        .code(HttpStatus.OK.value())
+                        .data(journeyResponses)
+                        .build());
     }
 
     private Trip findTripById(Long tripId) {
@@ -73,7 +86,7 @@ public class JourneyService {
     }
     
     @Transactional
-    public JourneyCreateResponse saveJourneys(Long tripId, JourneyCreateRequest request) {
+    public ResponseEntity<ApiResponse> saveJourneys(Long tripId, JourneyCreateRequest request) {
 
         List<MoveJourneyCreateRequest> moveJourneyDtos = request.getMoves();//이동
         List<LodgmentJourneyCreateRequest> lodgmentJourneyDtos = request.getLodgments();//숙박
@@ -101,15 +114,19 @@ public class JourneyService {
         List<VisitJourneyCreateResponse> visitJourneyCreateResponses =
                 savedVisitJourneys.stream().map(VisitJourneyCreateResponse::fromEntity).toList();
 
-        return JourneyCreateResponse.of(
+        JourneyCreateResponse journeyCreateResponse = JourneyCreateResponse.of(
                 moveJourneyCreateResponses,
                 visitJourneyCreateResponses,
                 lodgmentJourneyCreateResponses
         );
+
+        return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(journeyCreateResponse).build());
+
+
     }
 
     @Transactional
-    public MoveJourneyUpdateResponse modifyMoveJourney (
+    public ResponseEntity<ApiResponse> modifyMoveJourney (
             Long journeyId,
             MoveJourneyUpdateRequest updateRequest
     ){
@@ -123,12 +140,14 @@ public class JourneyService {
         findJourney.setStartTime(updateRequest.getStartTime());
         findJourney.setEndTime(updateRequest.getEndTime());
 
-        return MoveJourneyUpdateResponse.fromEntity(findJourney);
+        MoveJourneyUpdateResponse moveJourneyUpdateResponse = MoveJourneyUpdateResponse.fromEntity(findJourney);
+
+        return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(moveJourneyUpdateResponse).build());
 
     }
 
     @Transactional
-    public LodgmentJourneyUpdateResponse modifyLodgmentJourney (
+    public ResponseEntity<ApiResponse> modifyLodgmentJourney (
             Long journeyId,
             LodgmentJourneyUpdateRequest updateRequest
     ){
@@ -140,16 +159,19 @@ public class JourneyService {
         findJourney.setStartTime(updateRequest.getStartTime());
         findJourney.setEndTime(updateRequest.getEndTime());
 
-        return LodgmentJourneyUpdateResponse.fromEntity(findJourney);
+        LodgmentJourneyUpdateResponse lodgmentJourneyUpdateResponse = LodgmentJourneyUpdateResponse.fromEntity(findJourney);
+
+        return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(lodgmentJourneyUpdateResponse).build());
 
     }
 
     @Transactional
-    public VisitJourneyUpdateResponse modifyVisitJourney (
+    public ResponseEntity<ApiResponse> modifyVisitJourney (
             Long journeyId,
             VisitJourneyUpdateRequest updateRequest
     ){
 
+        log.info("Called : JousrenyService.modifyVisitJourney");
         VisitJourney findJourney = visitJourneyRepository.findById(journeyId)
                 .orElseThrow(() -> new BaseException(JOURNEY_NO_EXIST));
 
@@ -158,7 +180,9 @@ public class JourneyService {
         findJourney.setStartTime(updateRequest.getStartTime());
         findJourney.setEndTime(updateRequest.getEndTime());
 
-        return VisitJourneyUpdateResponse.fromEntity(findJourney);
+        VisitJourneyUpdateResponse visitJourneyUpdateResponse = VisitJourneyUpdateResponse.fromEntity(findJourney);
+
+        return ResponseEntity.ok(ApiResponse.builder().status("Success").code(HttpStatus.OK.value()).data(visitJourneyUpdateResponse).build());
 
     }
 
