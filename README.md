@@ -75,7 +75,9 @@ Docker Desktop 설치
 
 Docker 설치를 마치셨으면 이제 Docker Conmtainer을 실행시킬 수 있습니다.
 
-![스크린샷 2023-10-28 151421.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/090b1c92-03e6-4ae9-8e00-eb34672bf01c/4071fdb9-0f58-487b-93a3-7797b8e7b2f7/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7_2023-10-28_151421.png)
+
+<img width="179" alt="스크린샷 2023-10-28 151421" src="https://github.com/Group5-toy/KDT_Y_BE_Toy_Project2/assets/97028441/d13bdb69-1be9-40a0-9d6b-0d1eab1d579b">
+
 
 docker-compose.yml 파일에서 빨간상자로 표시된 실행버튼을 클릭하시면 자동으로 MySQL 컨테이너를 생성하여 동작시킵니다.
 
